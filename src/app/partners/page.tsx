@@ -7,9 +7,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
     return generatePageMetadata("partners", {
-        title: "Partner Program - websmonitor",
-        description: "Join the websmonitor Partner Program. Earn revenue, get priority support, and access co-marketing opportunities.",
-        keywords: ["websmonitor partners", "affiliate program", "reseller monitoring", "agency partnership"],
+        title: "Partner Program - WebsMonitor",
+        description: "Join the WebsMonitor Partner Program. Earn revenue, get priority support, and access co-marketing opportunities.",
+        keywords: ["WebsMonitor partners", "affiliate program", "reseller monitoring", "agency partnership"],
     });
 }
 
@@ -18,7 +18,7 @@ export default function PartnersPage() {
         {
             title: "Revenue Share",
             icon: TrendingUp,
-            description: "Earn a generous commission for every customer you refer to websmonitor.",
+            description: "Earn a generous commission for every customer you refer to WebsMonitor.",
         },
         {
             title: "Priority Support",
@@ -58,7 +58,7 @@ export default function PartnersPage() {
                                     <Rocket className="w-4 h-4" />
                                     Partner Program v2.0
                                 </div>
-                                <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-8 leading-[1.05] tracking-tight">Grow your business with websmonitor.</h1>
+                                <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-8 leading-[1.05] tracking-tight">Grow your business with WebsMonitor.</h1>
                                 <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl">Join our partner ecosystem and help your clients maintain 99.99% uptime while building a new recurring revenue stream.</p>
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <Link href="/contact" className="inline-flex h-16 items-center justify-center rounded-full bg-indigo-600 px-10 text-lg font-bold text-white shadow-2xl transition-all hover:bg-indigo-700 hover:shadow-indigo-200 transform hover:-translate-y-1">

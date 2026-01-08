@@ -22,9 +22,9 @@ async function main() {
       slug: "about",
       title: "About Us",
       data: {
-        title: "About websmonitor",
+        title: "About WebsMonitor",
         subtitle: "We are on a mission to make the internet more reliable.",
-        intro: "Founded in 2026, websmonitor started with a simple idea: website downtime shouldn't be a mystery. We built a platform that not only tells you when your site is down, but why.",
+        intro: "Founded in 2026, WebsMonitor started with a simple idea: website downtime shouldn't be a mystery. We built a platform that not only tells you when your site is down, but why.",
         mission: "Today, thousands of developers, startups, and enterprises trust us to keep a watchful eye on their digital assets. Our global network of monitoring nodes ensures that we see what your users see, no matter where they are."
       }
     },
@@ -47,7 +47,7 @@ async function main() {
       title: "Footer Content",
       data: {
         description: "Ensuring the reliability of the internet, one monitor at a time. Join thousands of developers who trust us.",
-        copyright: "© 2026 websmonitor Inc. All rights reserved."
+        copyright: "© 2026 WebsMonitor Inc. All rights reserved."
       }
     }
   ];

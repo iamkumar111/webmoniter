@@ -7,7 +7,7 @@ export default function CookiePage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">1. Use of Cookies</h2>
         <p className="text-gray-700 leading-relaxed">
-          websmonitor uses cookies to improve your experience on our site. Cookies are small text files that are placed on your machine to help the site provide a better user experience. 
+          WebsMonitor uses cookies to improve your experience on our site. Cookies are small text files that are placed on your machine to help the site provide a better user experience.
           In general, cookies are used to retain user preferences, store information for things like shopping carts, and provide anonymized tracking data to third party applications like Google Analytics.
         </p>
       </section>
@@ -33,7 +33,7 @@ export default function CookiePage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">3. Managing Cookies</h2>
         <p className="text-gray-700 leading-relaxed">
-          As a rule, cookies will make your browsing experience better. However, you may prefer to disable cookies on this site and on others. 
+          As a rule, cookies will make your browsing experience better. However, you may prefer to disable cookies on this site and on others.
           The most effective way to do this is to disable cookies in your browser. We suggest consulting the Help section of your browser or taking a look at the About Cookies website which offers guidance for all modern browsers.
         </p>
       </section>

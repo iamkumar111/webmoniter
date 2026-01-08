@@ -343,9 +343,9 @@ enum ApplicationStatus {
 
 model GlobalSEOSettings {
   id              String   @id @default("default")
-  siteName        String   @default("websmonitor")
+  siteName        String   @default("WebsMonitor")
   titleSeparator  String   @default("|")
-  titleSuffix     String   @default("websmonitor")
+  titleSuffix     String   @default("WebsMonitor")
   defaultKeywords String?  @db.Text
   defaultDescription String? @db.Text
   defaultOgImage  String?

@@ -7,7 +7,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
    return generatePageMetadata("pricing", {
-      title: "Pricing - websmonitor",
+      title: "Pricing - WebsMonitor",
       description: "Simple, transparent pricing for website monitoring. Start for free or scale with our Pro and Enterprise plans.",
       keywords: ["website monitoring pricing", "free uptime monitor", "ssl monitoring cost", "server monitoring plans"],
    });

@@ -9,9 +9,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
     return generatePageMetadata("careers", {
-        title: "Careers - websmonitor",
-        description: "Join websmonitor to build the future of website monitoring. We are hiring remote engineers, designers, and customer success leads.",
-        keywords: ["websmonitor careers", "remote engineering jobs", "startup jobs", "site reliability engineer jobs"],
+        title: "Careers - WebsMonitor",
+        description: "Join WebsMonitor to build the future of website monitoring. We are hiring remote engineers, designers, and customer success leads.",
+        keywords: ["WebsMonitor careers", "remote engineering jobs", "startup jobs", "site reliability engineer jobs"],
     });
 }
 
@@ -107,7 +107,7 @@ export default function CareersPage() {
                             </div>
                             <p className="text-gray-600 font-medium mb-1">Don't see a position that fits?</p>
                             <h4 className="text-xl font-bold text-gray-900 mb-6">We're always looking for talented people.</h4>
-                            <Link href="mailto:careers@websmonitor.online" className="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all inline-block">
+                            <Link href="mailto:careers@WebsMonitor.online" className="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all inline-block">
                                 Send an Open Application
                             </Link>
                         </div>

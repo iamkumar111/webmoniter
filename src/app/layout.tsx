@@ -11,13 +11,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "websmonitor - Free Uptime Monitoring & Status Pages",
-    template: "%s | websmonitor"
+    default: "WebsMonitor - Free Uptime Monitoring & Status Pages",
+    template: "%s | WebsMonitor"
   },
   description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
-  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "websmonitor", "free monitor", "website down check", "server monitoring", "api monitoring"],
-  authors: [{ name: "websmonitor Team" }],
-  creator: "websmonitor",
+  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMonitor", "free monitor", "website down check", "server monitoring", "api monitoring"],
+  authors: [{ name: "WebsMonitor Team" }],
+  creator: "WebsMonitor",
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -26,26 +26,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://websmonitor.online",
-    title: "websmonitor - Free Uptime Monitoring",
+    url: "https://WebsMonitor.online",
+    title: "WebsMonitor - Free Uptime Monitoring",
     description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
-    siteName: "websmonitor",
+    siteName: "WebsMonitor",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "websmonitor Dashboard Preview",
+        alt: "WebsMonitor Dashboard Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "websmonitor - Free Uptime Monitoring",
+    title: "WebsMonitor - Free Uptime Monitoring",
     description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
     images: ["/og-image.png"],
   },
-  metadataBase: new URL('https://websmonitor.online'),
+  metadataBase: new URL('https://WebsMonitor.online'),
   other: {
     "google-site-verification": "verification_token", // Placeholder
   }
@@ -73,11 +73,11 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "websmonitor",
-              "url": "https://websmonitor.online",
+              "name": "WebsMonitor",
+              "url": "https://WebsMonitor.online",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://websmonitor.online/search?q={search_term_string}",
+                "target": "https://WebsMonitor.online/search?q={search_term_string}",
                 "query-input": "required name=search_term_string"
               }
             })

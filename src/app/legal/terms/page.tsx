@@ -7,15 +7,15 @@ export default function TermsPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">1. Agreement to Terms</h2>
         <p className="text-gray-700 leading-relaxed">
-          These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and websmonitor ("we," "us" or "our"), 
-          concerning your access to and use of the websmonitor website.
+          These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and WebsMonitor ("we," "us" or "our"),
+          concerning your access to and use of the WebsMonitor website.
         </p>
       </section>
 
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">2. Intellectual Property Rights</h2>
         <p className="text-gray-700 leading-relaxed">
-          Unless otherwise indicated, the Site is our proprietary property and all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics on the Site 
+          Unless otherwise indicated, the Site is our proprietary property and all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics on the Site
           are owned or controlled by us or licensed to us, and are protected by copyright and trademark laws.
         </p>
       </section>
@@ -23,7 +23,7 @@ export default function TermsPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">3. User Obligations</h2>
         <p className="text-gray-700 leading-relaxed mb-4">
-          By using the Site, you represent and warrant that: 
+          By using the Site, you represent and warrant that:
         </p>
         <ul className="list-disc pl-6 text-gray-700 space-y-2">
           <li>All registration information you submit will be true, accurate, current, and complete.</li>
@@ -36,7 +36,7 @@ export default function TermsPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">4. Prohibited Activities</h2>
         <p className="text-gray-700 leading-relaxed">
-          You may not access or use the Site for any purpose other than that for which we make the Site available. 
+          You may not access or use the Site for any purpose other than that for which we make the Site available.
           The Site may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.
         </p>
       </section>
@@ -44,7 +44,7 @@ export default function TermsPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">5. Limitation of Liability</h2>
         <p className="text-gray-700 leading-relaxed">
-          In no event will we or our directors, employees, or agents be liable to you or any third party for any direct, indirect, consequential, exemplary, incidental, special, or punitive damages, 
+          In no event will we or our directors, employees, or agents be liable to you or any third party for any direct, indirect, consequential, exemplary, incidental, special, or punitive damages,
           including lost profit, lost revenue, loss of data, or other damages arising from your use of the site.
         </p>
       </section>

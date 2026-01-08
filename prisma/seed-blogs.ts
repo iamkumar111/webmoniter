@@ -94,10 +94,10 @@ async function main() {
       author: "Tech Visionary",
     },
     {
-      title: "Getting Started with WebsMoniter",
-      slug: "getting-started-websmoniter",
+      title: "Getting Started with websmonitor",
+      slug: "getting-started-websmonitor",
       excerpt: "How to set up your first monitor in under 60 seconds.",
-      content: "Welcome to WebsMoniter. We've designed our platform to be as simple as possible...",
+      content: "Welcome to websmonitor. We've designed our platform to be as simple as possible...",
       date: new Date("2024-06-19"),
       category: "Announcements",
       author: "Founder",

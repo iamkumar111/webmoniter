@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import { prisma } from './prisma';
 import { AlertStatus } from '@prisma/client';
 
-const baseUrl = process.env.NEXTAUTH_URL || 'http://websmoniter.online';
+const baseUrl = process.env.NEXTAUTH_URL || 'http://websmonitor.online';
 
 export function createTransporter(config: { host: string; port: number; user: string; pass: string }) {
   return nodemailer.createTransport({
@@ -42,7 +42,7 @@ export async function sendTestEmail(config: any, to: string) {
   try {
     await transporter.sendMail({
       from: {
-        name: config?.fromName || "WebsMoniter",
+        name: config?.fromName || "websmonitor",
         address: config?.fromEmail || ""
       },
       replyTo: config?.fromEmail || "",
@@ -67,7 +67,7 @@ export async function sendMail({ to, subject, html, text }: { to: string, subjec
   try {
     await transporter.sendMail({
       from: {
-        name: config?.fromName || "WebsMoniter",
+        name: config?.fromName || "websmonitor",
         address: config?.fromEmail || ""
       },
       replyTo: config?.fromEmail || "",

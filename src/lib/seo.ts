@@ -13,8 +13,8 @@ export async function generatePageMetadata(slug: string, fallback: Partial<Metad
     });
 
     const separator = settings?.titleSeparator || "|";
-    const suffix = settings?.titleSuffix || settings?.siteName || "WebsMoniter";
-    const siteName = settings?.siteName || "WebsMoniter";
+    const suffix = settings?.titleSuffix || settings?.siteName || "websmonitor";
+    const siteName = settings?.siteName || "websmonitor";
 
     if (!page) {
         // Even if page not found in PageContent, we might want to apply global suffixes if fallback title is string

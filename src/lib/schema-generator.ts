@@ -2,13 +2,13 @@ export function generateOrganizationSchema() {
     return {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "WebsMoniter",
-        "url": "https://websmoniter.online", // Replace with actual domain
-        "logo": "https://websmoniter.online/logo.png",
+        "name": "websmonitor",
+        "url": "https://websmonitor.online", // Replace with actual domain
+        "logo": "https://websmonitor.online/logo.png",
         "sameAs": [
-            "https://twitter.com/websmoniter",
-            "https://github.com/websmoniter",
-            "https://linkedin.com/company/websmoniter"
+            "https://twitter.com/websmonitor",
+            "https://github.com/websmonitor",
+            "https://linkedin.com/company/websmonitor"
         ],
         "contactPoint": {
             "@type": "ContactPoint",
@@ -26,7 +26,7 @@ export function generateBreadcrumbSchema(items: { name: string; item: string }[]
             "@type": "ListItem",
             "position": index + 1,
             "name": item.name,
-            "item": `https://websmoniter.online${item.item}`
+            "item": `https://websmonitor.online${item.item}`
         }))
     };
 }
@@ -35,7 +35,7 @@ export function generateSoftwareAppSchema() {
     return {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "WebsMoniter",
+        "name": "websmonitor",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web",
         "offers": {

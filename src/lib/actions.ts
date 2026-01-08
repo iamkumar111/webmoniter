@@ -327,7 +327,7 @@ export async function createUser(data: z.infer<typeof UserSchema> & { password?:
   }
 
   // Default password if not provided
-  const passwordToHash = data.password || "WebsMoniter123!";
+  const passwordToHash = data.password || "websmonitor123!";
   const hashedPassword = await bcrypt.hash(passwordToHash, 10);
 
   // Determine Organization ID
@@ -524,7 +524,7 @@ export async function submitEnquiry(data: { firstName: string; lastName: string;
   try {
     const { sendMail } = await import("@/lib/email");
     await sendMail({
-      to: "support@websmoniter.online",
+      to: "support@websmonitor.online",
       subject: `New Enquiry from ${data.firstName} ${data.lastName}`,
       text: `Name: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nMessage: ${data.message}`,
       html: `<p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
@@ -756,13 +756,13 @@ export async function testSlackWebhook(webhookUrl: string) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        text: "🧪 *WebsMoniter Test Message*\n\nYour Slack integration is working correctly! (websmoniter.online)",
+        text: "🧪 *websmonitor Test Message*\n\nYour Slack integration is working correctly! (websmonitor.online)",
         blocks: [
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "🧪 *WebsMoniter Test Message*\n\nYour Slack integration is working correctly! You will receive alerts here when your monitors go down or recover. (websmoniter.online)"
+              text: "🧪 *websmonitor Test Message*\n\nYour Slack integration is working correctly! You will receive alerts here when your monitors go down or recover. (websmonitor.online)"
             }
           }
         ]
@@ -786,13 +786,13 @@ export async function testDiscordWebhook(webhookUrl: string) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        content: "🧪 **WebsMoniter Test Message**",
+        content: "🧪 **websmonitor Test Message**",
         embeds: [{
           title: "Integration Test Successful",
           description: "Your Discord integration is working correctly! You will receive alerts here when your monitors go down or recover.",
           color: 5763719, // Green color
           footer: {
-            text: "WebsMoniter Uptime Monitoring"
+            text: "websmonitor Uptime Monitoring"
           },
           timestamp: new Date().toISOString()
         }]
@@ -814,7 +814,7 @@ export async function testWhatsAppMessage(phoneNumber: string, apiKey: string) {
   // Using CallMeBot free WhatsApp API
   // Users must first activate by sending "I allow callmebot to send me messages" to +34 621 331 709
   try {
-    const message = encodeURIComponent("🧪 WebsMoniter Test Message\n\nYour WhatsApp integration is working correctly! You will receive alerts here when your monitors go down or recover.");
+    const message = encodeURIComponent("🧪 websmonitor Test Message\n\nYour WhatsApp integration is working correctly! You will receive alerts here when your monitors go down or recover.");
     const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phoneNumber)}&text=${message}&apikey=${encodeURIComponent(apiKey)}`;
 
     const response = await fetch(url);

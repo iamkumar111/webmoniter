@@ -42,7 +42,7 @@ export default function RegisterPage() {
                     <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg mx-auto">W</div>
                     <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Create your account</h2>
                     <p className="mt-2 text-sm text-gray-600">
-                        Join WebsMoniter for free uptime monitoring
+                        Join websmonitor for free uptime monitoring
                     </p>
                 </div>
 

@@ -7,7 +7,7 @@ export default function GDPRPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">1. Our Commitment</h2>
         <p className="text-gray-700 leading-relaxed">
-          WebsMoniter is fully committed to compliance with the General Data Protection Regulation (GDPR). 
+          websmonitor is fully committed to compliance with the General Data Protection Regulation (GDPR). 
           We believe that your data belongs to you, and we take every precaution to ensure it is handled securely and transparently.
         </p>
       </section>

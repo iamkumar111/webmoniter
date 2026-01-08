@@ -333,7 +333,7 @@ const DiscordSetupInstructions = () => (
             <li>Right-click the channel → "Edit Channel"</li>
             <li>Go to "Integrations" → "Webhooks"</li>
             <li>Click "New Webhook"</li>
-            <li>Give it a name (e.g., "WebsMoniter Alerts")</li>
+            <li>Give it a name (e.g., "websmonitor Alerts")</li>
             <li>Click "Copy Webhook URL"</li>
             <li>Paste the URL above</li>
         </ol>

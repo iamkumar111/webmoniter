@@ -56,7 +56,7 @@ export default function LoginPage() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center relative z-10">
         <div className="inline-flex items-center gap-2 mb-6">
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">W</div>
-          <span className="font-bold text-3xl text-gray-900 tracking-tight">WebsMoniter</span>
+          <span className="font-bold text-3xl text-gray-900 tracking-tight">websmonitor</span>
         </div>
         <h2 className="text-2xl font-bold text-gray-900">Login</h2>
       </div>

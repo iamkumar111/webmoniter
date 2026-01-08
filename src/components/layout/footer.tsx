@@ -12,7 +12,7 @@ export default async function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <Link className="flex items-center gap-2 mb-4" href="/">
               <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">W</div>
-              <span className="font-bold text-xl text-gray-900">WebsMoniter</span>
+              <span className="font-bold text-xl text-gray-900">websmonitor</span>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs mb-6">
               Ensuring the reliability of the internet, one monitor at a time.
@@ -77,7 +77,7 @@ export default async function Footer() {
 
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500">
-            © 2026 WebsMoniter Inc. All rights reserved.
+            © 2026 websmonitor Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <span className="w-2 h-2 rounded-full bg-green-500"></span>

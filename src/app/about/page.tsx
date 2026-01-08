@@ -5,9 +5,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
    return generatePageMetadata("about", {
-      title: "About Us - WebsMoniter",
-      description: "Learn about the team behind WebsMoniter and our mission to make the internet more reliable.",
-      keywords: ["about websmoniter", "company mission", "uptime monitoring team"],
+      title: "About Us - websmonitor",
+      description: "Learn about the team behind websmonitor and our mission to make the internet more reliable.",
+      keywords: ["about websmonitor", "company mission", "uptime monitoring team"],
    });
 }
 
@@ -19,7 +19,7 @@ export default function AboutPage() {
          <main className="flex-1 pt-32 pb-16 md:pt-40 md:pb-24">
             <div className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-4xl">
                <div className="text-center mb-16">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6">About WebsMoniter</h1>
+                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6">About websmonitor</h1>
                   <p className="text-xl text-gray-600 leading-relaxed">
                      We are on a mission to make the internet more reliable.
                   </p>
@@ -27,7 +27,7 @@ export default function AboutPage() {
 
                <div className="prose prose-lg mx-auto text-gray-600">
                   <p className="mb-6">
-                     Founded in 2026, WebsMoniter started with a simple idea: website downtime shouldn&apos;t be a mystery.
+                     Founded in 2026, websmonitor started with a simple idea: website downtime shouldn&apos;t be a mystery.
                      We built a platform that not only tells you <em>when</em> your site is down, but <em>why</em>.
                   </p>
                   <p className="mb-6">

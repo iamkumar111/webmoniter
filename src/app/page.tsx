@@ -8,9 +8,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata("home", {
-    title: "WebsMoniter - Free Uptime Monitoring & Status Pages",
+    title: "websmonitor - Free Uptime Monitoring & Status Pages",
     description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
-    keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
+    keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "websmonitor", "free moniter", "website down check", "server monitoring", "api monitoring"],
   });
 }
 
@@ -37,7 +37,7 @@ export default async function LandingPage() {
                 <div className="space-y-4">
                   <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-4 py-1.5 w-fit mx-auto lg:mx-0">
                     <span className="flex h-2 w-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                    <span className="text-sm font-semibold text-indigo-700">{data.badgeText || "WebsMoniter: Next-Gen Monitoring"}</span>
+                    <span className="text-sm font-semibold text-indigo-700">{data.badgeText || "websmonitor: Next-Gen Monitoring"}</span>
                   </div>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-[1.1]">
                     {data.heroTitle || "5 Free Monitors Forever → Uptime, SSL, Cron, Keyword & API Checks in 30 Seconds!"}
@@ -162,7 +162,7 @@ export default async function LandingPage() {
         <section className="py-16 md:py-24 bg-white border-b border-gray-100">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">WebsMoniter Service Reliability</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">websmonitor Service Reliability</h2>
               <p className="mt-4 text-lg text-gray-600">Our platform processes billions of requests to ensure your services stay online, everywhere, all the time.</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
@@ -190,7 +190,7 @@ export default async function LandingPage() {
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why WebsMoniter?</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why websmonitor?</h2>
               <p className="mt-4 text-lg text-gray-600">We provide the most reliable monitoring service with a focus on simplicity and accuracy.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -228,7 +228,7 @@ export default async function LandingPage() {
                 <span className="text-sm font-semibold text-orange-700">Trusted by 5,000+ Developers</span>
               </div>
               <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6">What our users say</h2>
-              <p className="text-xl text-gray-600">Don't just take our word for it. Here's what teams like yours are saying about WebsMoniter.</p>
+              <p className="text-xl text-gray-600">Don't just take our word for it. Here's what teams like yours are saying about websmonitor.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -239,7 +239,7 @@ export default async function LandingPage() {
                   {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
                 </div>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed relative z-10">
-                  "WebsMoniter saved us during our Black Friday sale. The instant alerts let us fix a database issue before customers noticed. It's an absolute lifesaver."
+                  "websmonitor saved us during our Black Friday sale. The instant alerts let us fix a database issue before customers noticed. It's an absolute lifesaver."
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-600 text-lg">SJ</div>
@@ -275,7 +275,7 @@ export default async function LandingPage() {
                   {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
                 </div>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed relative z-10">
-                  "Simple, effective, and affordable. Most tools are bloated with features we don't need. WebsMoniter focuses on what matters: keeping us online."
+                  "Simple, effective, and affordable. Most tools are bloated with features we don't need. websmonitor focuses on what matters: keeping us online."
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-lg">ER</div>
@@ -298,9 +298,9 @@ export default async function LandingPage() {
             {
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "WebsMoniter",
-              "url": "https://websmoniter.online",
-              "logo": "https://websmoniter.online/logo.png",
+              "name": "websmonitor",
+              "url": "https://websmonitor.online",
+              "logo": "https://websmonitor.online/logo.png",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+1-555-0123-456",
@@ -310,7 +310,7 @@ export default async function LandingPage() {
             {
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
-              "name": "WebsMoniter",
+              "name": "websmonitor",
               "applicationCategory": "DeveloperApplication",
               "operatingSystem": "Web",
               "offers": {

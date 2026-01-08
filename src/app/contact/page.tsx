@@ -7,9 +7,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
    return generatePageMetadata("contact", {
-      title: "Contact Us - WebsMoniter",
-      description: "Get in touch with the WebsMoniter team. We are here to help with your monitoring needs.",
-      keywords: ["contact websmoniter", "support", "help center", "customer service"],
+      title: "Contact Us - websmonitor",
+      description: "Get in touch with the websmonitor team. We are here to help with your monitoring needs.",
+      keywords: ["contact websmonitor", "support", "help center", "customer service"],
    });
 }
 
@@ -36,7 +36,7 @@ export default function ContactPage() {
                            <div>
                               <h3 className="font-bold text-gray-900 mb-1">Email Us</h3>
                               <p className="text-gray-600">Our team typically responds within 2 hours.</p>
-                              <a href="mailto:support@websmoniter.online" className="text-indigo-600 font-medium hover:underline mt-2 inline-block">support@websmoniter.online</a>
+                              <a href="mailto:support@websmonitor.online" className="text-indigo-600 font-medium hover:underline mt-2 inline-block">support@websmonitor.online</a>
                            </div>
                         </div>
 

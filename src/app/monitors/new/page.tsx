@@ -18,23 +18,27 @@ export default async function NewMonitorPage() {
   const user = await prisma.user.findUnique({
     where: { id: session?.user?.id! },
     select: {
+      role: true,
       userGroup: { select: { features: true } }
     }
   });
 
-  let minInterval = 5;
-  if (user?.userGroup?.features) {
-    const features = user.userGroup.features as any;
-    if (typeof features.minInterval === 'number') {
-      minInterval = features.minInterval;
-    }
-  } else {
-    // Check default group if no group assigned
-    const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
-    if (defaultGroup?.features) {
-      const features = defaultGroup.features as any;
+  let minInterval = 1;
+
+  if (user?.role !== 'SUPER_ADMIN') {
+    if (user?.userGroup?.features) {
+      const features = user.userGroup.features as any;
       if (typeof features.minInterval === 'number') {
         minInterval = features.minInterval;
+      }
+    } else {
+      // Check default group if no group assigned
+      const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
+      if (defaultGroup?.features) {
+        const features = defaultGroup.features as any;
+        if (typeof features.minInterval === 'number') {
+          minInterval = features.minInterval;
+        }
       }
     }
   }

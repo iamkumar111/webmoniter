@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | websmonitor"
   },
   description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
-  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "websmonitor", "free moniter", "website down check", "server monitoring", "api monitoring"],
+  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "websmonitor", "free monitor", "website down check", "server monitoring", "api monitoring"],
   authors: [{ name: "websmonitor Team" }],
   creator: "websmonitor",
   icons: {

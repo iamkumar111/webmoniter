@@ -154,9 +154,9 @@ export default function MonitorForm({ monitor, minInterval = 1 }: { monitor?: Mo
               {...form.register('interval', { valueAsNumber: true })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              {[1, 2, 5, 10, 15, 30, 60].map(m => (
-                <option key={m} value={m} disabled={m < minInterval}>
-                  {m} minutes {m < minInterval ? '(Upgrade to unlock)' : ''}
+              {[1, 2, 5, 10, 15, 30, 60].filter(m => m >= minInterval).map(m => (
+                <option key={m} value={m}>
+                  {m} minutes
                 </option>
               ))}
             </select>

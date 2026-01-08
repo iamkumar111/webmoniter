@@ -21,7 +21,7 @@ export default async function EditMonitorPage({ params }: { params: Promise<{ id
     }
   });
 
-  let minInterval = 1;
+  let minInterval = 5;
   if (user?.userGroup?.features) {
     const features = user.userGroup.features as any;
     if (typeof features.minInterval === 'number') {

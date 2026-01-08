@@ -91,14 +91,17 @@ export async function createMonitor(data: z.infer<typeof MonitorSchema>) {
     include: { userGroup: true }
   });
 
+  if (!user) {
+    throw new Error("User not found");
+  }
+
   // Enforce Plan Limits
-  // Enforce Plan Limits
-  if (user?.role !== 'SUPER_ADMIN') {
-    let features: any = user?.userGroup?.features || {};
-    let slug = user?.userGroup?.slug;
+  if (user.role !== 'SUPER_ADMIN') {
+    let features: any = user.userGroup?.features || {};
+    let slug = user.userGroup?.slug;
 
     // Fallback to default group if no group assigned
-    if (!user?.userGroup) {
+    if (!user.userGroup) {
       const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
       if (defaultGroup) {
         features = defaultGroup.features;
@@ -172,20 +175,21 @@ export async function updateMonitor(id: string, data: z.infer<typeof MonitorSche
     include: { userGroup: true }
   });
 
-  if (!canAccessMonitor(user!, monitor)) {
+  if (!user) throw new Error("Unauthorized");
+
+  if (!canAccessMonitor(user, monitor)) {
     throw new Error("Unauthorized");
   }
 
   const validated = MonitorSchema.parse(data);
 
   // Enforce Plan Limits on Update
-  // Enforce Plan Limits on Update
-  if (user?.role !== 'SUPER_ADMIN') {
-    let features: any = user?.userGroup?.features || {};
-    let slug = user?.userGroup?.slug;
+  if (user.role !== 'SUPER_ADMIN') {
+    let features: any = user.userGroup?.features || {};
+    let slug = user.userGroup?.slug;
 
     // Fallback to default group if no group assigned
-    if (!user?.userGroup) {
+    if (!user.userGroup) {
       const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
       if (defaultGroup) {
         features = defaultGroup.features;

@@ -21,6 +21,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            # Enable error handling: Exit immediately if a command exits with a non-zero status
+            set -e
+
             # Load NVM and Node environment
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -34,5 +37,7 @@ jobs:
             npx prisma generate
             npx prisma db push
             npm run build
+            
+            # Only reload if build succeeds (which is guaranteed by set -e above)
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save

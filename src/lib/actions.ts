@@ -122,13 +122,13 @@ export async function createMonitor(data: z.infer<typeof MonitorSchema>) {
       });
 
       if (monitorCount >= features.maxMonitors) {
-        throw new Error(`Your plan is limited to ${features.maxMonitors} monitors. Please upgrade to add more.`);
+        return { error: `Your plan is limited to ${features.maxMonitors} monitors. Please upgrade to add more.` };
       }
     }
 
     // 2. Minimum Interval Limit
     if (features.minInterval && validated.interval < features.minInterval) {
-      throw new Error(`Your plan requires a minimum check interval of ${features.minInterval} minutes.`);
+      return { error: `Your plan requires a minimum check interval of ${features.minInterval} minutes.` };
     }
   }
 
@@ -204,7 +204,7 @@ export async function updateMonitor(id: string, data: z.infer<typeof MonitorSche
 
     // Minimum Interval Limit
     if (features.minInterval && validated.interval < features.minInterval) {
-      throw new Error(`Your plan requires a minimum check interval of ${features.minInterval} minutes.`);
+      return { error: `Your plan requires a minimum check interval of ${features.minInterval} minutes.` };
     }
   }
 

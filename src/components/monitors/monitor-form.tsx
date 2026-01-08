@@ -66,10 +66,17 @@ export default function MonitorForm({ monitor, minInterval = 1 }: { monitor?: Mo
     };
 
     try {
+      let result;
       if (monitor) {
-        await updateMonitor(monitor.id, sanitizedData);
+        result = await updateMonitor(monitor.id, sanitizedData);
       } else {
-        await createMonitor(sanitizedData);
+        result = await createMonitor(sanitizedData);
+      }
+
+      if (result && typeof result === 'object' && 'error' in result) {
+        toast.error(result.error);
+        setLoading(false);
+        return;
       }
     } catch (error: any) {
       // NEXT_REDIRECT is expected - Next.js uses thrown errors for redirects

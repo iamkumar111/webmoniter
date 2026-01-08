@@ -92,8 +92,25 @@ export async function createMonitor(data: z.infer<typeof MonitorSchema>) {
   });
 
   // Enforce Plan Limits
-  if (user?.userGroup?.features) {
-    const features = user.userGroup.features as any;
+  // Enforce Plan Limits
+  if (user?.role !== 'SUPER_ADMIN') {
+    let features: any = user?.userGroup?.features || {};
+    let slug = user?.userGroup?.slug;
+
+    // Fallback to default group if no group assigned
+    if (!user?.userGroup) {
+      const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
+      if (defaultGroup) {
+        features = defaultGroup.features;
+        slug = defaultGroup.slug;
+      }
+    }
+
+    // Ensure Free plan has strict defaults if DB is missing them
+    if (slug === 'free') {
+      if (features.maxMonitors === undefined) features.maxMonitors = 5;
+      if (features.minInterval === undefined) features.minInterval = 5;
+    }
 
     // 1. Max Monitors Limit
     if (features.maxMonitors) {
@@ -162,8 +179,24 @@ export async function updateMonitor(id: string, data: z.infer<typeof MonitorSche
   const validated = MonitorSchema.parse(data);
 
   // Enforce Plan Limits on Update
-  if (user?.userGroup?.features) {
-    const features = user.userGroup.features as any;
+  // Enforce Plan Limits on Update
+  if (user?.role !== 'SUPER_ADMIN') {
+    let features: any = user?.userGroup?.features || {};
+    let slug = user?.userGroup?.slug;
+
+    // Fallback to default group if no group assigned
+    if (!user?.userGroup) {
+      const defaultGroup = await prisma.userGroup.findFirst({ where: { isDefault: true } });
+      if (defaultGroup) {
+        features = defaultGroup.features;
+        slug = defaultGroup.slug;
+      }
+    }
+
+    // Ensure Free plan has strict defaults for minInterval checking
+    if (slug === 'free') {
+      if (features.minInterval === undefined) features.minInterval = 5;
+    }
 
     // Minimum Interval Limit
     if (features.minInterval && validated.interval < features.minInterval) {

@@ -1,0 +1,840 @@
+# Software Requirements Specification (SRS) Document
+## Website Uptime Monitoring System
+
+---
+
+## Document Information
+
+**Project Name:** Website Uptime Monitoring System  
+**Version:** 1.0  
+**Date:** January 08, 2026  
+**Prepared By:** Development Team  
+**Document Status:** Final Draft
+
+---
+
+## Table of Contents
+
+1. Introduction
+2. Overall Description
+3. System Features and Requirements
+4. External Interface Requirements
+5. Non-Functional Requirements
+6. Technology Stack
+7. Glossary
+
+---
+
+## 1. Introduction
+
+### 1.1 Purpose
+
+This Software Requirements Specification (SRS) document describes the complete requirements for the Website Uptime Monitoring System. The system monitors website availability, SSL certificates, response times, and error logs from a single server with email alerts and role-based access control.
+
+### 1.2 Scope
+
+The system provides:
+- Website uptime monitoring (HTTP/HTTPS ping)
+- SSL certificate expiration tracking
+- Response time measurement and tracking
+- Error detection and logging
+- Email alert notifications
+- Role-based admin panel with 4 user roles
+- Real-time dashboard with statistics
+- Historical reporting and analytics
+
+**Out of Scope:**
+- Distributed monitoring from multiple locations
+- SMS or mobile push notifications
+- Integration with third-party monitoring services
+- Public status pages
+
+### 1.3 Definitions and Acronyms
+
+- **Monitor:** A configured website or endpoint to check
+- **Check:** A single monitoring attempt
+- **Incident:** A period when a monitor is down
+- **Uptime:** Percentage of time a monitor is operational
+- **Response Time:** Time taken for a request to complete
+- **SSL/TLS:** Secure Socket Layer / Transport Layer Security
+- **RBAC:** Role-Based Access Control
+- **SMTP:** Simple Mail Transfer Protocol
+
+---
+
+## 2. Overall Description
+
+### 2.1 Product Perspective
+
+A standalone web application running on a single server that monitors multiple websites and sends email alerts when issues are detected. Unlike complex distributed monitoring systems, this provides essential monitoring capabilities with simple deployment.
+
+### 2.2 User Roles
+
+**Super Administrator (Pre-configured)**
+- Email: iamkumar111@gmail.com
+- Password: 123@HelloS
+- Full system access including user management and system settings
+
+**Administrator**
+- Create and manage all monitors
+- Configure alerts and view all reports
+- Cannot manage users or system settings
+
+**User**
+- View only monitors assigned to them
+- Receive alerts for assigned monitors
+- Read-only access to reports
+
+**Viewer**
+- Read-only access to monitor status
+- Cannot receive alerts or modify anything
+
+### 2.3 Operating Environment
+
+- **Server:** Linux-based OS (Ubuntu 22.04 LTS recommended)
+- **Browsers:** Chrome, Firefox, Safari, Edge (latest 2 versions)
+- **Mobile:** iOS Safari, Android Chrome
+- **Display:** Responsive 320px to 4K resolution
+
+---
+
+## 3. System Features and Requirements
+
+### 3.1 Authentication & Authorization
+
+**REQ-AUTH-01:** System shall provide login with email and password
+
+**REQ-AUTH-02:** System shall create pre-configured Super Admin account:
+- Email: iamkumar111@gmail.com
+- Password: 123@HelloS
+
+**REQ-AUTH-03:** System shall maintain user sessions with JWT tokens (7-day expiration)
+
+**REQ-AUTH-04:** System shall provide password reset via email
+
+**REQ-AUTH-05:** System shall enforce password requirements:
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one number
+- At least one special character
+
+**REQ-AUTH-06:** System shall lock accounts for 15 minutes after 5 failed login attempts
+
+**REQ-AUTH-07:** System shall restrict features based on user role:
+- **Super Admin:** All features including user management and system settings
+- **Admin:** Monitor management, alerts, reports (no user management)
+- **User:** View assigned monitors and receive alerts only
+- **Viewer:** Read-only access, no alerts
+
+---
+
+### 3.2 Monitor Management
+
+**REQ-MON-01:** System shall allow creating monitors with:
+- Monitor name (required)
+- Target URL or IP address (required)
+- Monitor type: HTTP, HTTPS, or Ping (required)
+- Check interval: 1, 2, 5, 10, 15, 30 minutes, or 1 hour (required)
+
+**REQ-MON-02:** For HTTP/HTTPS monitors, system shall support:
+- HTTP methods: GET, POST, PUT, DELETE, HEAD
+- Custom HTTP headers
+- Request body for POST/PUT
+- Request timeout (5-60 seconds)
+- Expected HTTP status code (default: 200)
+- Expected response content (keyword or regex)
+- Follow redirects (yes/no)
+- Verify SSL certificate (yes/no)
+- Response time threshold for degraded status
+
+**REQ-MON-03:** System shall allow configuring failure and recovery thresholds:
+- Failure threshold: consecutive failures before marking as down (default: 1)
+- Recovery threshold: consecutive successes before marking as up (default: 1)
+
+**REQ-MON-04:** System shall provide monitor list with:
+- Search by name or URL
+- Filter by status (up, down, degraded, paused)
+- Sort by name, status, response time, uptime
+
+**REQ-MON-05:** System shall allow users to:
+- Edit monitor configuration
+- Delete monitor (with confirmation)
+- Pause/resume monitoring
+- Test monitor immediately (run check now)
+
+**REQ-MON-06:** System shall display monitor status:
+- **Up:** Responding correctly (green)
+- **Down:** Not responding or error (red)
+- **Degraded:** Responding but slow (yellow)
+- **Paused:** Monitoring disabled (gray)
+
+---
+
+### 3.3 Automated Monitoring Engine
+
+**REQ-ENG-01:** System shall run background process to check all active monitors automatically
+
+**REQ-ENG-02:** System shall execute checks according to each monitor's configured interval
+
+**REQ-ENG-03:** For each HTTP/HTTPS check, system shall:
+- Send HTTP request using configured method and headers
+- Measure response time in milliseconds
+- Record HTTP status code
+- Capture response headers
+- Capture response body (first 1000 characters)
+- Validate against expected status code
+- Check for expected content if specified
+- Check SSL certificate if HTTPS
+
+**REQ-ENG-04:** For each ping check, system shall:
+- Attempt TCP connection to target
+- Measure connection time
+- Detect connection failures
+
+**REQ-ENG-05:** System shall store check results including:
+- Timestamp
+- Status (up/down/degraded)
+- Response time
+- HTTP status code (if applicable)
+- Error message (if failed)
+- Response headers and body
+
+**REQ-ENG-06:** System shall update monitor status based on thresholds:
+- Increment failure counter on each failed check
+- Increment success counter on each successful check
+- Reset failure counter when check succeeds
+- Reset success counter when check fails
+- Mark as DOWN when failures reach failure threshold
+- Mark as UP when successes reach recovery threshold (after being down)
+- Mark as DEGRADED when response time exceeds configured threshold
+
+**REQ-ENG-07:** System shall handle errors gracefully:
+- Network timeouts
+- DNS resolution failures
+- SSL handshake failures
+- Connection refused errors
+- Invalid responses
+
+**REQ-ENG-08:** System shall limit concurrent checks to 10 to prevent server overload
+
+**REQ-ENG-09:** System shall queue additional checks when concurrent limit reached
+
+**REQ-ENG-10:** System shall retry failed checks once before recording as failure
+
+---
+
+### 3.4 SSL Certificate Monitoring
+
+**REQ-SSL-01:** System shall automatically check SSL certificates for all HTTPS monitors
+
+**REQ-SSL-02:** System shall extract certificate information:
+- Valid from date
+- Valid until date (expiration)
+- Days remaining until expiration
+- Certificate issuer
+- Certificate subject (domain)
+- Serial number
+
+**REQ-SSL-03:** System shall calculate days remaining until certificate expires
+
+**REQ-SSL-04:** System shall mark certificate status:
+- **Valid:** More than configured warning days remaining
+- **Expiring Soon:** Within warning threshold (default: 14 days)
+- **Expired:** Past expiration date
+
+**REQ-SSL-05:** System shall allow configuring SSL warning threshold (7, 14, or 30 days)
+
+**REQ-SSL-06:** System shall display certificate information on monitor details page
+
+**REQ-SSL-07:** System shall trigger alerts for certificate expiration warnings
+
+---
+
+### 3.5 Email Alert System
+
+**REQ-ALERT-01:** System shall allow configuring email recipients for each monitor (comma-separated list)
+
+**REQ-ALERT-02:** System shall send "Monitor Down" alert when:
+- Monitor status changes to DOWN
+- Failure threshold is reached
+
+**REQ-ALERT-03:** "Monitor Down" alert shall include:
+- Monitor name and URL
+- Down since timestamp
+- Number of consecutive failures
+- Last error message
+- Last response time
+- Link to view monitor
+
+**REQ-ALERT-04:** System shall send "Monitor Recovered" alert when:
+- Monitor status changes from DOWN to UP
+- Recovery threshold is reached
+
+**REQ-ALERT-05:** "Monitor Recovered" alert shall include:
+- Monitor name and URL
+- Total downtime duration
+- Recovered at timestamp
+- Current response time
+- Link to dashboard
+
+**REQ-ALERT-06:** System shall send "SSL Certificate Expiring" alert when:
+- Certificate days remaining reaches warning threshold
+- Once daily until renewed
+
+**REQ-ALERT-07:** "SSL Certificate Expiring" alert shall include:
+- Monitor name and URL
+- Certificate expiration date
+- Days remaining
+- Certificate issuer
+- Link to certificate details
+
+**REQ-ALERT-08:** System shall send "Slow Response" alert when:
+- Response time exceeds configured threshold
+- Alert enabled for the monitor
+
+**REQ-ALERT-09:** "Slow Response" alert shall include:
+- Monitor name and URL
+- Current response time
+- Configured threshold
+- 24-hour average response time
+- Link to performance data
+
+**REQ-ALERT-10:** System shall use HTML email templates with:
+- Responsive design
+- Color-coded status indicators
+- Action buttons with links
+- Plain text fallback
+
+**REQ-ALERT-11:** System shall implement alert cooldown (minimum 5 minutes between same alert type for same monitor)
+
+**REQ-ALERT-12:** System shall track email delivery status (pending, sent, failed)
+
+**REQ-ALERT-13:** System shall retry failed emails up to 3 times with exponential backoff
+
+**REQ-ALERT-14:** System shall allow users to enable/disable alert types per monitor:
+- Alert on down
+- Alert on recovery
+- Alert on SSL expiration
+- Alert on slow response
+
+**REQ-ALERT-15:** System shall provide "Send Test Alert" function to verify email configuration
+
+---
+
+### 3.6 Dashboard
+
+**REQ-DASH-01:** System shall display dashboard overview with:
+- Total monitors count
+- Monitors UP count (green)
+- Monitors DOWN count (red)
+- Monitors DEGRADED count (yellow)
+- Monitors PAUSED count (gray)
+- Overall uptime percentage (24h, 7d, 30d)
+- Average response time across all monitors
+
+**REQ-DASH-02:** System shall display monitor list showing:
+- Monitor name
+- Current status (color indicator)
+- Target URL
+- Last check time
+- Response time
+- Quick action buttons (pause/resume, edit, delete, view)
+
+**REQ-DASH-03:** System shall provide:
+- Search monitors by name or URL
+- Filter by status, type
+- Sort by name, status, response time, uptime
+
+**REQ-DASH-04:** System shall auto-refresh dashboard every 30 seconds
+
+**REQ-DASH-05:** System shall display recent incidents on dashboard:
+- Last 10 incidents
+- Timestamp
+- Monitor name
+- Event type (down, recovered)
+- Duration
+
+**REQ-DASH-06:** System shall show SSL certificates expiring within 30 days
+
+**REQ-DASH-07:** Dashboard shall be responsive and work on mobile devices
+
+---
+
+### 3.7 Monitor Details & Analytics
+
+**REQ-DETAIL-01:** System shall display detailed monitor page with:
+- Monitor configuration details
+- Current status and response time
+- Last checked and next check timestamp
+- Uptime percentages: 24h, 7d, 30d, 90d
+
+**REQ-DETAIL-02:** System shall display response time chart:
+- Line chart with time on X-axis
+- Response time (ms) on Y-axis
+- Time range selector: 24h, 7d, 30d
+- Visual markers for downtime periods
+- Average response time line indicator
+
+**REQ-DETAIL-03:** System shall display uptime heatmap:
+- Hourly/daily blocks colored by status
+- Green: up, Red: down, Yellow: degraded
+- Tooltip on hover with timestamp and details
+- Visual representation of availability patterns
+
+**REQ-DETAIL-04:** For HTTPS monitors, system shall display SSL information:
+- Certificate validity status
+- Valid from / Valid until dates
+- Days remaining
+- Issuer organization
+- Subject (domain name)
+
+**REQ-DETAIL-05:** System shall display recent check history (last 100 checks):
+- Timestamp
+- Status
+- Response time
+- Status code
+- Error message (if failed)
+
+**REQ-DETAIL-06:** System shall display incident history:
+- Start time
+- End time (if resolved)
+- Duration
+- Incident type
+- Error details
+- Resolution status
+
+**REQ-DETAIL-07:** System shall display error logs with:
+- Timestamp
+- Error type
+- Error message
+- HTTP status code
+- Response headers (expandable)
+- Response body preview (expandable)
+
+**REQ-DETAIL-08:** System shall allow exporting check history to CSV format
+
+---
+
+### 3.8 Reporting
+
+**REQ-REPORT-01:** System shall provide Uptime Report with:
+- Date range selector (24h, 7d, 30d, 90d, custom)
+- Overall uptime percentage
+- Total downtime duration
+- Number of incidents
+- Mean Time To Recovery (MTTR)
+- Mean Time Between Failures (MTBF)
+- Per-monitor breakdown
+
+**REQ-REPORT-02:** System shall provide Performance Report with:
+- Date range selector
+- Average response time per monitor
+- Minimum and maximum response times
+- Response time trends
+- Slowest monitors ranking
+
+**REQ-REPORT-03:** System shall provide SSL Certificate Report with:
+- All monitored SSL certificates
+- Expiration dates
+- Days remaining
+- Certificate status (valid/expiring/expired)
+- Certificate issuers
+- Certificates expiring within 30 days highlighted
+
+**REQ-REPORT-04:** System shall provide Incident Report with:
+- All incidents in date range
+- Incident start and end times
+- Duration
+- Affected monitors
+- Error details
+- Resolution status
+
+**REQ-REPORT-05:** System shall allow exporting all reports to:
+- PDF format
+- CSV format
+
+**REQ-REPORT-06:** Reports shall be generated on-demand (not pre-cached)
+
+**REQ-REPORT-07:** System shall show loading indicator while generating reports
+
+---
+
+### 3.9 User Management (Super Admin Only)
+
+**REQ-USER-01:** Super Admin shall view all users with:
+- Name
+- Email
+- Role
+- Account status (active/inactive)
+- Last login time
+- Registration date
+
+**REQ-USER-02:** Super Admin shall create new users with:
+- Name
+- Email
+- Initial password
+- Role assignment
+- Active/inactive status
+
+**REQ-USER-03:** Super Admin shall edit existing users:
+- Change name
+- Change email
+- Reset password
+- Change role
+- Activate/deactivate account
+
+**REQ-USER-04:** Super Admin shall delete user accounts with confirmation
+
+**REQ-USER-05:** System shall prevent Super Admin from deleting their own account
+
+**REQ-USER-06:** System shall send email to new users with account details
+
+**REQ-USER-07:** System shall force password change on first login for new accounts
+
+**REQ-USER-08:** System shall provide search and filter for users by name, email, or role
+
+---
+
+### 3.10 System Configuration (Super Admin Only)
+
+**REQ-CONFIG-01:** Super Admin shall configure SMTP email settings:
+- SMTP host
+- SMTP port
+- SMTP username
+- SMTP password
+- From email address
+- From name
+
+**REQ-CONFIG-02:** System shall provide "Send Test Email" function
+
+**REQ-CONFIG-03:** Super Admin shall configure default monitoring settings:
+- Default check interval
+- Default timeout
+- Default failure threshold
+- Default recovery threshold
+
+**REQ-CONFIG-04:** Super Admin shall configure data retention:
+- Check history retention (days)
+- Alert log retention (days)
+- Incident log retention (days)
+- Default: 90 days
+
+**REQ-CONFIG-05:** Super Admin shall trigger manual database cleanup to remove old data
+
+**REQ-CONFIG-06:** System shall display system health dashboard:
+- Database status
+- Available disk space
+- Active monitors count
+- Total checks performed today
+- Email delivery status
+
+**REQ-CONFIG-07:** All configuration changes shall be logged with timestamp and user
+
+---
+
+### 3.11 User Profile & Preferences
+
+**REQ-PROFILE-01:** Users shall view and edit their profile:
+- Name
+- Email address
+
+**REQ-PROFILE-02:** Users shall change password by providing:
+- Current password
+- New password (must meet complexity requirements)
+- Password confirmation
+
+**REQ-PROFILE-03:** Users shall configure notification preferences:
+- Enable/disable email notifications
+- Quiet hours (start and end time)
+
+**REQ-PROFILE-04:** Users shall select their timezone for correct timestamp display
+
+**REQ-PROFILE-05:** System shall validate email format when updating profile
+
+**REQ-PROFILE-06:** System shall require verification when changing email address
+
+---
+
+## 4. External Interface Requirements
+
+### 4.1 User Interface Requirements
+
+**UI-01:** System shall provide responsive web interface supporting 320px to 4K displays
+
+**UI-02:** System shall use consistent color coding:
+- Green: success/up status
+- Red: error/down status
+- Yellow: warning/degraded status
+- Blue: informational
+- Gray: inactive/paused
+
+**UI-03:** System shall provide loading indicators for all async operations
+
+**UI-04:** System shall display clear error messages when operations fail
+
+**UI-05:** System shall require confirmation dialogs for destructive actions
+
+**UI-06:** System shall support keyboard navigation for accessibility
+
+**UI-07:** Login page shall include:
+- Email input
+- Password input
+- Remember me checkbox
+- Login button
+- Forgot password link
+
+**UI-08:** Main dashboard layout shall include:
+- Top navigation bar with logo and user menu
+- Collapsible sidebar with navigation links
+- Main content area
+- Footer
+
+**UI-09:** Forms shall validate input in real-time and show inline errors
+
+**UI-10:** Charts shall be interactive with tooltips on hover
+
+**UI-11:** System shall show "No data available" when charts have no data
+
+---
+
+### 4.2 Software Interfaces
+
+**SW-01:** System shall connect to MySQL database for data storage
+
+**SW-02:** System shall use connection pooling for efficient database access
+
+**SW-03:** System shall use parameterized queries to prevent SQL injection
+
+**SW-04:** System shall connect to SMTP server for sending emails
+
+**SW-05:** System shall support TLS/SSL for SMTP connections
+
+**SW-06:** System shall handle email service unavailability gracefully
+
+**SW-07:** System shall optionally use Redis for:
+- Session caching
+- Job queue management
+- Rate limiting
+
+**SW-08:** System shall function without Redis (graceful degradation)
+
+---
+
+### 4.3 Communication Interfaces
+
+**COMM-01:** System shall use HTTPS for all web communication
+
+**COMM-02:** System shall support HTTP/1.1 and HTTP/2
+
+**COMM-03:** System shall make outbound HTTP/HTTPS requests to monitored websites
+
+**COMM-04:** System shall handle various network conditions:
+- Timeouts
+- Connection refused
+- DNS failures
+- SSL errors
+
+**COMM-05:** System shall use SMTP protocol for email delivery (ports 25, 465, 587)
+
+---
+
+## 5. Non-Functional Requirements
+
+### 5.1 Performance Requirements
+
+**PERF-01:** System shall support monitoring up to 500 websites simultaneously
+
+**PERF-02:** System shall complete single HTTP check within 30 seconds (including timeout)
+
+**PERF-03:** Dashboard shall load within 2 seconds on standard broadband connection
+
+**PERF-04:** System shall handle up to 10 concurrent checks without performance degradation
+
+**PERF-05:** Database queries shall execute within 1 second for standard operations
+
+**PERF-06:** System shall send email alerts within 1 minute of detection
+
+**PERF-07:** Dashboard shall auto-refresh without full page reload
+
+---
+
+### 5.2 Security Requirements
+
+**SEC-01:** System shall hash passwords using bcrypt with minimum 12 rounds
+
+**SEC-02:** System shall use secure JWT tokens for session management
+
+**SEC-03:** System shall implement rate limiting to prevent brute force attacks
+
+**SEC-04:** System shall sanitize all user inputs to prevent XSS attacks
+
+**SEC-05:** System shall use HTTPS only (no HTTP)
+
+**SEC-06:** System shall validate SSL certificates by default
+
+**SEC-07:** System shall log all authentication attempts
+
+**SEC-08:** System shall mask sensitive data (passwords, API keys) in logs
+
+**SEC-09:** System shall implement CORS policy for API requests
+
+**SEC-10:** System shall validate all API inputs on server side
+
+---
+
+### 5.3 Reliability Requirements
+
+**REL-01:** System shall have 99% uptime (excluding scheduled maintenance)
+
+**REL-02:** System shall automatically restart failed monitoring jobs
+
+**REL-03:** System shall recover from database connection failures automatically
+
+**REL-04:** System shall continue monitoring even if email service is unavailable
+
+**REL-05:** System shall store unsent alerts and retry when service recovers
+
+**REL-06:** System shall handle server restarts without data loss
+
+**REL-07:** System shall log all errors for debugging
+
+---
+
+### 5.4 Maintainability Requirements
+
+**MAINT-01:** Code shall follow TypeScript best practices
+
+**MAINT-02:** Code shall include comments for complex logic
+
+**MAINT-03:** System shall use environment variables for configuration
+
+**MAINT-04:** System shall provide clear error messages and stack traces
+
+**MAINT-05:** Database schema shall support migrations
+
+**MAINT-06:** System shall separate concerns (frontend, backend, monitoring engine)
+
+---
+
+### 5.5 Scalability Requirements
+
+**SCALE-01:** System shall support adding more monitors without code changes
+
+**SCALE-02:** System shall support increasing check frequency without performance issues
+
+**SCALE-03:** Database shall support data growth for at least 1 year without cleanup
+
+**SCALE-04:** System shall handle increased user load (up to 50 concurrent users)
+
+---
+
+### 5.6 Usability Requirements
+
+**USE-01:** New users shall complete first monitor setup within 5 minutes
+
+**USE-02:** System shall provide inline help text for complex features
+
+**USE-03:** Error messages shall be clear and actionable
+
+**USE-04:** System shall provide consistent navigation across all pages
+
+**USE-05:** Forms shall have logical field ordering and grouping
+
+**USE-06:** System shall work without JavaScript for basic functionality (progressive enhancement)
+
+---
+
+### 5.7 Backup and Recovery
+
+**BACKUP-01:** System shall support manual database backup via admin panel
+
+**BACKUP-02:** Database backups shall include all user data, monitors, and historical data
+
+**BACKUP-03:** System shall provide database restore functionality
+
+**BACKUP-04:** System shall document backup procedures in admin guide
+
+---
+
+## 6. Technology Stack
+
+### 6.1 Frontend & Backend Framework
+- **Next.js 14+** with App Router
+- **React 18+**
+- **TypeScript** for type safety
+
+### 6.2 Database
+- **MySQL** for primary data storage
+- **Redis** (optional) for caching and queue management
+
+### 6.3 Authentication
+- **NextAuth.js v5** for authentication
+- **JWT tokens** for session management
+- **bcrypt** for password hashing
+
+### 6.4 Monitoring Engine
+- **Node.js cron jobs** for scheduling
+- **Axios** for HTTP requests
+- **node-cron** for job scheduling
+
+### 6.5 Email Service
+- **Nodemailer** for email sending
+- **SMTP** configuration (Gmail/SendGrid/Custom)
+
+### 6.6 UI Components & Styling
+- **Tailwind CSS** for styling
+- **Shadcn/ui** for UI components
+- **Recharts** for charts and analytics
+- **Lucide icons** for iconography
+
+---
+
+## 7. Glossary
+
+**Monitor:** A configured endpoint (website/URL) that the system checks periodically
+
+**Check:** A single monitoring attempt to verify if a monitor is up or down
+
+**Incident:** A period when a monitor is in down status
+
+**Uptime:** Percentage of time a monitor is in up status
+
+**Downtime:** Total duration when a monitor is in down status
+
+**Response Time:** Time in milliseconds for a request to complete
+
+**Degraded:** Status when a monitor is up but response time exceeds threshold
+
+**Failure Threshold:** Number of consecutive failures before marking monitor as down
+
+**Recovery Threshold:** Number of consecutive successes before marking monitor as up
+
+**Alert Cooldown:** Minimum time between sending similar alerts
+
+**MTTR:** Mean Time To Recovery - average time to resolve incidents
+
+**MTBF:** Mean Time Between Failures - average time between incidents
+
+**SSL Certificate:** Digital certificate that authenticates website identity
+
+**Certificate Expiration:** Date when SSL certificate becomes invalid
+
+**SMTP:** Protocol used for sending emails
+
+**JWT:** JSON Web Token used for user authentication
+
+**Role-Based Access Control (RBAC):** Access control based on user roles
+
+---
+
+## Document Approval
+
+**Prepared By:** Development Team  
+**Reviewed By:** Project Manager  
+**Approved By:** Stakeholder  
+**Date:** January 08, 2026
+
+---
+
+**End of Document**

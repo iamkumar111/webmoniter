@@ -43,5 +43,8 @@ Ensure the following secrets are added to your GitHub Repository (Settings > Sec
 - SSH_USER: Your server username
 - SSH_KEY: Your private SSH key
 - APP_DIR: Full path to your app directory
+- DATABASE_URL: Your production database connection string
+- NEXTAUTH_SECRET: Your auth secret (same as .env)
+- NEXTAUTH_URL: Your production URL (e.g. https://monitor.webmoniter.online)
 
-Deployment triggers automatically on every push to the `main` branch.
+Deployment triggers automatically on every push to the `master` branch.

@@ -35,3 +35,13 @@ pm2 start ecosystem.config.js
 - pm2 logs: View logs
 - pm2 restart all: Restart all processes
 - pm2 save: Save process list for system reboots
+
+ 5. Automated Deployment (GitHub Actions)
+The repository is configured with GitHub Actions for automated deployment.
+Ensure the following secrets are added to your GitHub Repository (Settings > Secrets and variables > Actions):
+- SSH_HOST: Your server IP
+- SSH_USER: Your server username
+- SSH_KEY: Your private SSH key
+- APP_DIR: Full path to your app directory
+
+Deployment triggers automatically on every push to the `main` branch.

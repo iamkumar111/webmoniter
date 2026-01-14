@@ -1,0 +1,107 @@
+User Management & Role-Based Access Control
+Uptime Monitoring System
+
+1. User Role Overview
+Role Hierarchy
+Super Administrator → Administrator → Manager → Viewer
+
+2. Role Permissions
+2.1 Super Administrator
+Pre-configured Account:
+
+Email: iamkumar111@gmail.com
+Password: 123@HelloS
+
+Full System Access:
+
+✅ Manage all users (create, edit, delete, change roles)
+✅ Access ALL monitors in the system
+✅ Configure system settings (SMTP, defaults, retention)
+✅ View system health and logs
+✅ Perform database backups
+✅ Cannot be deleted by anyone
+
+
+2.2 Administrator
+Operations Manager Role:
+
+✅ Create, edit, delete ALL monitors
+✅ Configure alerts for all monitors
+✅ View all reports and analytics
+✅ Receive email alerts
+❌ Cannot manage users 
+❌ Cannot access system configuration
+
+
+2.3 Manager
+Team Lead Role:
+
+✅ Create and manage their own monitors
+✅ Assign their monitors to Viewers
+✅ Configure alerts for their monitors
+✅ View reports for their monitors only,export reports
+✅ Receive email alerts for their monitors
+❌ Cannot access other managers' monitors
+❌ Cannot manage users but add new Viewer account 
+❌ Cannot access system settings
+
+
+2.4 Viewer
+Read-Only Observer:
+
+✅ View monitors assigned to them
+✅ View status and statistics (read-only)
+✅ View incident history (read-only)
+❌ Cannot create or edit monitors
+❌ Cannot receive email alerts
+❌ Cannot export reports
+
+
+4. User Management Features (Super Admin Only)
+4.1 User List View
+
+View all users with name, email, role, status
+Search by name or email
+Filter by role (Admin, Manager, Viewer)
+Filter by status (Active, Inactive)
+Sort by name, role, or last login
+
+4.2 Create User
+Required Fields:
+
+Full name
+Email address
+Role (Admin, Manager, Viewer)
+Initial password
+
+Actions After Creation:
+
+Send welcome email with credentials
+Force password change on first login
+Account is Active by default
+
+4.3 Edit User
+Editable:
+
+Name, email, role, status
+Reset password
+Activate/Deactivate account
+
+View:
+
+Login history
+Created monitors count
+Assigned monitors
+
+4.4 Delete User
+Confirmation Required:
+
+Show user details
+Choose what happens to their monitors:
+
+Transfer to another user
+Mark as unassigned
+Delete monitors
+
+
+

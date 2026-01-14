@@ -45,3 +45,46 @@ Ensure the following secrets are added to your GitHub Repository (Settings > Sec
 - APP_DIR: Full path to your app directory
 
 Deployment triggers automatically on every push to the `master` branch.
+
+## 🔑 Setting up the SSH Key (Step-by-Step)
+
+If you don't have a specific key for GitHub Actions yet, follow these steps to generate one.
+
+### 1. Generate a New Key Pair
+Run this command in your terminal (do **not** use a passphrase):
+```bash
+ssh-keygen -m PEM -t rsa -b 4096 -C "github-actions" -f ./github_deploy_key
+```
+
+### 2. Add Public Key to Server
+This allows the key to access your server.
+1.  **View the public key**:
+    ```bash
+    cat ./github_deploy_key.pub
+    ```
+2.  Copy the output (starts with `ssh-rsa ...`).
+3.  **Log in to your Server/VPS**.
+4.  Add it to the authorized keys:
+    ```bash
+    nano ~/.ssh/authorized_keys
+    # Paste the copied key on a new line
+    # Save (Ctrl+O, Enter) and Exit (Ctrl+X)
+    ```
+5.  **Fix Permissions** (Critical):
+    ```bash
+    chmod 700 ~/.ssh
+    chmod 600 ~/.ssh/authorized_keys
+    ```
+
+### 3. Add Private Key to GitHub
+This gives GitHub the power to use the key.
+1.  **View the private key**:
+    ```bash
+    cat ./github_deploy_key
+    ```
+2.  Copy the **entire** content (including `-----BEGIN RSA PRIVATE KEY-----` and `-----END...`).
+3.  Go to **GitHub Repo** > **Settings** > **Secrets and variables** > **Actions**.
+4.  Click **New repository secret**.
+    -   **Name**: `SSH_KEY`
+    -   **Value**: Paste the private key.
+

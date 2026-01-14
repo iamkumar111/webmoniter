@@ -21,6 +21,13 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            # Load NVM and Node environment
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
+            # Alternative: source .bashrc if NVM isn't found
+            source ~/.bashrc
+            
             cd ${{ secrets.APP_DIR }}
             git pull origin master
             npm install

@@ -1,0 +1,372 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String              @id @default(cuid())
+  name             String?
+  email            String              @unique
+  password         String
+  role             Role                @default(MANAGER)
+  status           UserStatus          @default(ACTIVE)
+  lastLogin        DateTime?
+  failedAttempts   Int                 @default(0)
+  lockedUntil      DateTime?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  createdBy        String?
+  organizationId   String?
+  auditLogs        AuditLog[]
+  monitors         Monitor[]
+  assignedMonitors MonitorAssignment[]
+  createdById      User?               @relation("UserCreator", fields: [createdBy], references: [id])
+  createdUsers     User[]              @relation("UserCreator")
+  organization     Organization?       @relation(fields: [organizationId], references: [id])
+  
+  userGroupId      String?
+  userGroup        UserGroup?          @relation(fields: [userGroupId], references: [id])
+
+  @@index([createdBy], map: "User_createdBy_fkey")
+  @@index([organizationId], map: "User_organizationId_fkey")
+  @@index([userGroupId], map: "User_userGroupId_fkey")
+}
+
+model Organization {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  status    String    @default("ACTIVE")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  monitors  Monitor[]
+  users     User[]
+}
+
+model Monitor {
+  id                   String              @id @default(cuid())
+  name                 String
+  url                  String
+  type                 MonitorType         @default(HTTPS)
+  interval             Int                 @default(5)
+  method               String              @default("GET")
+  headers              Json?
+  body                 String?             @db.Text
+  timeout              Int                 @default(30)
+  expectedStatusCode   Int                 @default(200)
+  expectedContent      String?
+  followRedirects      Boolean             @default(true)
+  verifySSL            Boolean             @default(true)
+  responseThreshold    Int                 @default(6000) // ms for degraded status
+  failureThreshold     Int                 @default(1)
+  recoveryThreshold    Int                 @default(1)
+  status               MonitorStatus       @default(PAUSED)
+  lastCheck            DateTime?
+  nextCheck            DateTime?
+  consecutiveFailures  Int                 @default(0)
+  consecutiveSuccesses Int                 @default(0)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  userId               String
+  recipients           String?             @db.Text
+  alertOnDown          Boolean             @default(true)
+  alertOnRecovery      Boolean             @default(true)
+  alertOnSSL           Boolean             @default(true)
+  alertOnSlow          Boolean             @default(true)
+  alertCooldown        Int                 @default(5) // minutes (BUG-012)
+  sslWarningThreshold  Int                 @default(14)
+  organizationId       String?
+  alertLogs            AlertLog[]
+  checks               Check[]
+  incidents            Incident[]
+  organization         Organization?       @relation(fields: [organizationId], references: [id])
+  user                 User                @relation(fields: [userId], references: [id])
+  assignments          MonitorAssignment[]
+
+  @@index([organizationId], map: "Monitor_organizationId_fkey")
+  @@index([userId], map: "Monitor_userId_fkey")
+}
+
+model Check {
+  id           String        @id @default(cuid())
+  monitorId    String
+  timestamp    DateTime      @default(now())
+  status       MonitorStatus
+  responseTime Int
+  statusCode   Int?
+  errorMessage String?       @db.Text
+  headers      Json?
+  body         String?       @db.Text
+  createdAt    DateTime      @default(now())
+  monitor      Monitor       @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId, timestamp])
+}
+
+model Incident {
+  id           String         @id @default(cuid())
+  monitorId    String
+  startTime    DateTime       @default(now())
+  endTime      DateTime?
+  duration     Int?
+  type         MonitorStatus
+  errorDetails String?        @db.Text
+  status       IncidentStatus @default(OPEN)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  monitor      Monitor        @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId, startTime])
+}
+
+model AlertLog {
+  id        String      @id @default(cuid())
+  monitorId String
+  type      String
+  recipient String
+  status    AlertStatus @default(PENDING)
+  error     String?     @db.Text
+  createdAt DateTime    @default(now())
+  monitor   Monitor     @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId], map: "AlertLog_monitorId_fkey")
+}
+
+model SmtpConfig {
+  id        String   @id @default("default")
+  host      String
+  port      Int
+  user      String
+  pass      String
+  fromEmail String
+  fromName  String
+  updatedAt DateTime @updatedAt
+}
+
+model SystemSettings {
+  id                       String    @id @default("default")
+  defaultInterval          Int       @default(5)
+  defaultTimeout           Int       @default(30)
+  defaultFailureThreshold  Int       @default(1)
+  defaultRecoveryThreshold Int       @default(1)
+  defaultAlertCooldown     Int       @default(5) // minutes (BUG-012)
+  retentionCheckHistory    Int       @default(90)
+  retentionAlertLog        Int       @default(90)
+  retentionIncidentLog     Int       @default(90)
+  updatedAt                DateTime  @updatedAt
+  googleAnalyticsId        String?
+  socialFacebook           String?
+  socialGithub             String?
+  socialLinkedin           String?
+  socialTwitter            String?
+  lastMonitoringPulse      DateTime?
+}
+
+model PageContent {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  data            Json
+  // SEO Fields
+  metaTitle       String?
+  metaDescription String?  @db.Text
+  keywords        String?  @db.Text
+  ogTitle         String?
+  ogDescription   String?  @db.Text
+  ogImage         String?
+  structuredData  Json?    // For custom Schema Markup (FAQ, HowTo, etc.)
+  updatedAt       DateTime @updatedAt
+}
+
+model Blog {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  content   String   @db.Text
+  excerpt   String   @db.Text
+  date      DateTime
+  category  String
+  author    String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Enquiry {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String
+  message      String   @db.Text
+  status       String   @default("NEW")
+  adminComment String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SslCertificate {
+  id            String    @id @default(cuid())
+  monitorId     String    @unique
+  validFrom     DateTime?
+  validUntil    DateTime?
+  daysRemaining Int?
+  issuer        String?
+  subject       String?
+  serialNumber  String?
+  updatedAt     DateTime  @updatedAt
+  lastAlertDate DateTime?
+}
+
+model MonitorAssignment {
+  id         String   @id @default(cuid())
+  monitorId  String
+  userId     String
+  assignedBy String
+  createdAt  DateTime @default(now())
+  monitor    Monitor  @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([monitorId, userId])
+  @@index([userId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  target    String?
+  details   Json?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([action])
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  USER
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum MonitorType {
+  HTTP
+  HTTPS
+  PING
+}
+
+enum MonitorStatus {
+  UP
+  DOWN
+  DEGRADED
+  PAUSED
+}
+
+enum IncidentStatus {
+  OPEN
+  RESOLVED
+}
+
+enum AlertStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+// Integration Settings (for premium feature access control)
+model IntegrationSettings {
+  id                    String   @id @default("default")
+  slackEnabled          Boolean  @default(false)
+  discordEnabled        Boolean  @default(false)
+  whatsappEnabled       Boolean  @default(false)
+  updatedAt             DateTime @updatedAt
+}
+
+// User-specific webhook integrations
+model UserIntegration {
+  id              String   @id @default(cuid())
+  userId          String
+  type            IntegrationType
+  webhookUrl      String?  // For Slack/Discord
+  phoneNumber     String?  // For WhatsApp
+  apiKey          String?  // For WhatsApp (CallMeBot API key)
+  isEnabled       Boolean  @default(true)
+  notifyDown      Boolean  @default(true)
+  notifyRecovery  Boolean  @default(true)
+  notifySSL       Boolean  @default(true)
+  notifySlow      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, type])
+  @@index([userId])
+}
+
+enum IntegrationType {
+  SLACK
+  DISCORD
+  WHATSAPP
+}
+
+model JobApplication {
+  id          String            @id @default(cuid())
+  jobTitle    String
+  firstName   String
+  lastName    String
+  email       String
+  phone       String?
+  resumeUrl   String?           @db.Text
+  coverLetter String?           @db.Text
+  status      ApplicationStatus @default(NEW)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+enum ApplicationStatus {
+  NEW
+  REVIEWING
+  REJECTED
+  HIRED
+}
+
+model GlobalSEOSettings {
+  id              String   @id @default("default")
+  siteName        String   @default("WebMoniter")
+  titleSeparator  String   @default("|")
+  titleSuffix     String   @default("WebMoniter")
+  defaultKeywords String?  @db.Text
+  defaultDescription String? @db.Text
+  defaultOgImage  String?
+  
+  // Robots & Sitemap
+  robotsTxt       String?  @db.Text
+  sitemapEnabled  Boolean  @default(true)
+  
+  // AEO Specifics
+  knowledgeGraph  Json?    // Organization Structured Data customization
+  
+  updatedAt       DateTime @updatedAt
+}
+
+model UserGroup {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  features    Json     // Stores permissions like { integrations: ['SLACK'], maxMonitors: 10 }
+  isDefault   Boolean  @default(false)
+  users       User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

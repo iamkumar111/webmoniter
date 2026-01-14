@@ -55,10 +55,17 @@ cron.schedule('* * * * *', async () => {
   const cycleStart = Date.now();
 
   try {
-    // Update heartbeat (lastMonitoringPulse) immediately - fire and forget
-    prisma.systemSettings.update({
+    // Update heartbeat (lastMonitoringPulse) with upsert to create if missing
+    prisma.systemSettings.upsert({
       where: { id: 'default' },
-      data: { lastMonitoringPulse: new Date() }
+      update: { lastMonitoringPulse: new Date() },
+      create: {
+        id: 'default',
+        lastMonitoringPulse: new Date(),
+        retentionCheckHistory: 30,
+        retentionAlertLog: 30,
+        retentionIncidentLog: 30
+      }
     }).catch(e => console.error('Pulse update failed:', e));
 
     const monitors = await prisma.monitor.findMany({

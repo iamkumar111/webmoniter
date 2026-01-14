@@ -3,7 +3,7 @@ name: Deploy UptimeRobot
 on:
   push:
     branches:
-      - master
+      - master # Change this if your default branch is different
 
 jobs:
   deploy:
@@ -13,6 +13,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Check
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          SKIP_ENV_VALIDATION: true # Optional: skips T3/Next.js env validation if configured
+        run: |
+          npx prisma generate
+          npm run build
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -20,26 +39,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            set -e
-            cd /home/webmoniter/htdocs/webmoniter.online/webmoniter
-
-            echo "⬇️ Pull latest code"
+            cd ${{ secrets.APP_DIR }}
             git pull origin master
-
-            echo "📦 Install dependencies"
             npm install
-
-            echo "🧬 Prisma generate"
             npx prisma generate
-
-            echo "🧱 Prisma DB sync"
             npx prisma db push
-
-            echo "🏗️ Build Next.js app"
             npm run build
-
-            echo "🚀 Restart PM2"
             pm2 startOrRestart ecosystem.config.js --env production
-
-            echo "💾 Save PM2"
             pm2 save

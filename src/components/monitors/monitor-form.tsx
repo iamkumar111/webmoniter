@@ -16,8 +16,8 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   url: z.string().url("Must be a valid URL"),
   type: z.enum(["HTTP", "HTTPS", "PING"]),
-  interval: z.number().min(1),
-  timeout: z.number().min(5).max(60),
+  interval: z.coerce.number().min(1),
+  timeout: z.coerce.number().min(5).max(60),
   recipients: z.string().optional(),
   verifySSL: z.boolean(),
   alertOnDown: z.boolean(),
@@ -25,9 +25,9 @@ const formSchema = z.object({
   alertOnSSL: z.boolean(),
   alertOnSlow: z.boolean(),
   method: z.string(),
-  expectedStatusCode: z.number(),
-  responseThreshold: z.number().min(100),
-  alertCooldown: z.number().min(1).default(5),
+  expectedStatusCode: z.coerce.number(),
+  responseThreshold: z.coerce.number().min(100),
+  alertCooldown: z.coerce.number().min(1).default(5),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -71,10 +71,15 @@ export default function MonitorForm({ monitor }: { monitor?: Monitor }) {
       } else {
         await createMonitor(sanitizedData);
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong. Please check your inputs.');
-    } finally {
+    } catch (error: any) {
+      // NEXT_REDIRECT is expected - Next.js uses thrown errors for redirects
+      if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+        throw error; // Re-throw to allow the redirect to happen
+      }
+
+      console.error('Monitor save error:', error);
+      const errorMessage = error?.message || 'Something went wrong. Please check your inputs.';
+      toast.error(errorMessage);
       setLoading(false);
     }
   };

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
+import NotificationListener from "@/components/layout/notification-listener";
 
 export default async function DashboardLayout({
   children,
@@ -16,6 +17,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-gray-100">
+      <NotificationListener />
       <Sidebar user={session.user} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={session.user} />
@@ -26,3 +28,4 @@ export default async function DashboardLayout({
     </div>
   );
 }
+

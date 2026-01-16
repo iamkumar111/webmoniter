@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Clock, Globe, ShieldCheck, Activity, AlertTriangle, Edit } from "lucide-react";
 import { format } from "date-fns";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import MonitorChart from "@/components/monitors/monitor-chart";
 import EngineStatus from "@/components/dashboard/engine-status";
 import AutoRefresh from "@/components/layout/auto-refresh";

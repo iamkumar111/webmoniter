@@ -6,13 +6,23 @@ import { Download, FileText, BarChart } from "lucide-react";
 export default async function ReportsPage() {
   const session = await auth();
   if (!session?.user) return null;
-  
+
   // Fetch high-level stats for report
   const stats = await prisma.monitor.aggregate({
     _count: { _all: true },
   });
 
+  const isSuperAdmin = (session.user as any).role === 'SUPER_ADMIN';
+
+  const whereClause = isSuperAdmin ? {} : {
+    OR: [
+      { userId: session.user.id },
+      { assignments: { some: { userId: session.user.id } } }
+    ]
+  };
+
   const monitorStats = await prisma.monitor.findMany({
+    where: whereClause,
     select: {
       id: true,
       name: true,
@@ -26,7 +36,7 @@ export default async function ReportsPage() {
       }
     }
   });
-  
+
   // Fetch SSL info separately to avoid type errors with generated client
   const sslCertificates = await prisma.sslCertificate.findMany();
   const sslMap = new Map(sslCertificates.map(c => [c.monitorId, c]));
@@ -52,11 +62,11 @@ export default async function ReportsPage() {
 
   // Simple CSV generation logic (Client side usually better, but server rendered for download link)
   const csvHeader = "Name,URL,Type,Status,Avg Response (ms),Uptime (Last 100),SSL Days\n";
-  const csvRows = reportData.map(r => 
+  const csvRows = reportData.map(r =>
     `"${r.name}","${r.url}",${r.type},${r.status},${r.avgResponse},${r.uptime}%,${r.sslDays}`
   ).join("\n");
   const csvContent = csvHeader + csvRows;
-  
+
   // Data URI for simple download (Limited size, but works for MVP)
   const csvDataUri = `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`;
 
@@ -67,8 +77,8 @@ export default async function ReportsPage() {
           <BarChart className="w-6 h-6 text-green-600" />
           System Reports
         </h1>
-        <a 
-          href={csvDataUri} 
+        <a
+          href={csvDataUri}
           download={`uptime-report-${format(new Date(), 'yyyy-MM-dd')}.csv`}
           className="bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-md font-medium transition-colors flex items-center gap-2"
         >

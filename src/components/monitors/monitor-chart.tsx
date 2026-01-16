@@ -20,8 +20,8 @@ export default function MonitorChart({ data }: { data: any[] }) {
   }
 
   return (
-    <div style={{ width: '100%', height: 300 }}>
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full h-[300px] min-h-[300px]">
+      <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
         <AreaChart data={data}>
           <defs>
             <linearGradient id="colorLatency" x1="0" y1="0" x2="0" y2="1">

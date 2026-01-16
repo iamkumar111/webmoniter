@@ -55,13 +55,15 @@ export default function UserNav({ user }: UserNavProps) {
                             <span>Change Password</span>
                         </Link>
 
-                        <Link
-                            href="/settings"
-                            className="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors group"
-                        >
-                            <SettingsIcon className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
-                            <span>Settings</span>
-                        </Link>
+                        {user.role === 'SUPER_ADMIN' && (
+                            <Link
+                                href="/settings"
+                                className="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors group"
+                            >
+                                <SettingsIcon className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
+                                <span>Settings</span>
+                            </Link>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-50 p-1.5">

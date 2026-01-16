@@ -7,8 +7,8 @@ export default function TermsPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">1. Agreement to Terms</h2>
         <p className="text-gray-700 leading-relaxed">
-          These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and WebMoniter ("we," "us" or "our"), 
-          concerning your access to and use of the WebMoniter website.
+          These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and WebsMoniter ("we," "us" or "our"), 
+          concerning your access to and use of the WebsMoniter website.
         </p>
       </section>
 

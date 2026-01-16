@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { prisma } from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXTAUTH_URL || 'https://webmoniter.io';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://websmoniter.online';
 
     // Fetch Global SEO Settings
     const settings = await prisma.globalSEOSettings.findUnique({

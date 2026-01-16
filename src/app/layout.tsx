@@ -11,36 +11,36 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "WebMoniter - Free Uptime Monitoring & Status Pages",
-    template: "%s | WebMoniter"
+    default: "WebsMoniter - Free Uptime Monitoring & Status Pages",
+    template: "%s | WebsMoniter"
   },
   description: "The world's leading free uptime monitoring service. Monitor websites, SSL certificates, and APIs in real-time. Get instant alerts via Email, Slack, and SMS.",
-  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
-  authors: [{ name: "WebMoniter Team" }],
-  creator: "WebMoniter",
+  keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
+  authors: [{ name: "WebsMoniter Team" }],
+  creator: "WebsMoniter",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://webmoniter.io",
-    title: "WebMoniter - Free Uptime Monitoring",
+    url: "https://websmoniter.online",
+    title: "WebsMoniter - Free Uptime Monitoring",
     description: "Monitor your websites uptime and performance for free. Get instant alerts and detailed status pages.",
-    siteName: "WebMoniter",
+    siteName: "WebsMoniter",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "WebMoniter Dashboard Preview",
+        alt: "WebsMoniter Dashboard Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "WebMoniter - Free Uptime Monitoring",
+    title: "WebsMoniter - Free Uptime Monitoring",
     description: "Monitor your websites uptime and performance for free. Get instant alerts and detailed status pages.",
     images: ["/og-image.png"],
   },
-  metadataBase: new URL('https://webmoniter.io'),
+  metadataBase: new URL('https://websmoniter.online'),
 };
 
 export default async function RootLayout({

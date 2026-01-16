@@ -120,22 +120,32 @@ function IntegrationCard({
     // Show locked state if not enabled globally and user is not super admin
     if (!isEnabled && !isSuperAdmin) {
         return (
-            <div className="relative bg-white rounded-xl border border-gray-200 p-6 opacity-75">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-gray-100/80 rounded-xl flex items-center justify-center backdrop-blur-[1px]">
-                    <div className="text-center p-6">
-                        <Lock className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-                        <p className="text-sm font-medium text-gray-600 mb-1">Premium Feature</p>
-                        <p className="text-xs text-gray-500">Available only in Team and Enterprise plans.</p>
-                        <button className="mt-3 px-4 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-medium rounded-full hover:from-indigo-600 hover:to-purple-700 transition-all">
+            <div className="group relative bg-white rounded-xl border border-gray-200 p-6 overflow-hidden shadow-sm hover:shadow-md transition-all text-left">
+                {/* Content (Dimmed) */}
+                <div className="flex items-center justify-between opacity-40 grayscale pointer-events-none select-none filter blur-[1px]">
+                    <div className="flex items-center gap-5">
+                        {icon}
+                        <div>
+                            <h3 className="font-bold text-gray-900 text-lg tracking-tight">{title}</h3>
+                            <p className="text-sm text-gray-500 font-medium">{description}</p>
+                        </div>
+                    </div>
+                    <div className="w-11 h-6 bg-gray-200 rounded-full"></div>
+                </div>
+
+                {/* Overlay Badge */}
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6">
+                    <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl p-5 text-center max-w-sm transform transition-transform group-hover:scale-105 duration-300">
+                        <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Lock className="w-5 h-5" />
+                        </div>
+                        <h4 className="font-bold text-gray-900 text-sm mb-1">Premium Feature</h4>
+                        <p className="text-xs text-gray-500 mb-4 leading-relaxed">
+                            Upgrade to Team or Enterprise plan to unlock {title} integration.
+                        </p>
+                        <button className="w-full py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">
                             Upgrade Now
                         </button>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-gray-100 rounded-lg">{icon}</div>
-                    <div>
-                        <h3 className="font-semibold text-gray-900">{title}</h3>
-                        <p className="text-sm text-gray-500">{description}</p>
                     </div>
                 </div>
             </div>
@@ -143,13 +153,14 @@ function IntegrationCard({
     }
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg">{icon}</div>
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            {/* Header / Toggle Section */}
+            <div className="p-6 flex items-center justify-between">
+                <div className="flex items-center gap-5">
+                    {icon}
                     <div>
-                        <h3 className="font-semibold text-gray-900">{title}</h3>
-                        <p className="text-sm text-gray-500">{description}</p>
+                        <h3 className="font-bold text-gray-900 text-lg tracking-tight">{title}</h3>
+                        <p className="text-sm text-gray-500 font-medium">{description}</p>
                     </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -159,129 +170,140 @@ function IntegrationCard({
                         onChange={(e) => setEnabled(e.target.checked)}
                         className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-100 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                 </label>
             </div>
 
-            {/* Setup Instructions Toggle */}
-            <button
-                onClick={() => setShowSetup(!showSetup)}
-                className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-700 mb-4"
-            >
-                <Info className="w-3.5 h-3.5" />
-                {showSetup ? 'Hide setup instructions' : 'Show setup instructions'}
-            </button>
+            {/* Expanded Content Section */}
+            {enabled && (
+                <div className="px-6 pb-6 pt-0 space-y-6">
+                    {/* Setup Instructions Toggle */}
+                    <div className="border-t border-gray-100 pt-4">
+                        <button
+                            onClick={() => setShowSetup(!showSetup)}
+                            className="flex items-center gap-2 text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+                        >
+                            <Info className="w-3.5 h-3.5" />
+                            {showSetup ? 'Hide setup instructions' : 'Show setup instructions'}
+                        </button>
 
-            {showSetup && (
-                <div className="mb-4 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
-                    {setupInstructions}
+                        {showSetup && (
+                            <div className="mt-3 p-4 bg-indigo-50/50 rounded-lg border border-indigo-100/50 text-sm">
+                                {setupInstructions}
+                            </div>
+                        )}
+                    </div>
+
+                    {isWhatsApp ? (
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 block">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
+                                        placeholder="+1234567890"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-gray-400"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 block">API Key</label>
+                                    <input
+                                        type="text"
+                                        value={apiKey}
+                                        onChange={(e) => setApiKey(e.target.value)} // Mask API key visually?
+                                        placeholder="Enter CallMeBot API Key"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-gray-400"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                                <label className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-2 block">Test Connection</label>
+                                <div className="flex gap-2">
+                                    <input
+                                        type="tel"
+                                        value={testNumber}
+                                        onChange={(e) => setTestNumber(e.target.value)}
+                                        placeholder="Optional test number"
+                                        className="flex-1 max-w-xs px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={onTest}
+                                        disabled={isTesting || !apiKey || (!phoneNumber && !testNumber)}
+                                        className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+                                    >
+                                        {isTesting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                                        Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 block">Webhook URL</label>
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <input
+                                        type="url"
+                                        value={webhookUrl}
+                                        onChange={(e) => setWebhookUrl(e.target.value)}
+                                        placeholder={type === 'SLACK' ? 'https://hooks.slack.com/services/...' : 'https://discord.com/api/webhooks/...'}
+                                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-gray-400 min-w-0"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={onTest}
+                                        disabled={isTesting || !webhookUrl}
+                                        className="shrink-0 px-5 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
+                                    >
+                                        {isTesting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                                        Send Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="border-t border-gray-100 pt-4">
+                        <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3 block">Alert Preference</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {[
+                                { label: 'Monitor Down', checked: notifyDown, onChange: setNotifyDown },
+                                { label: 'Monitor Recovery', checked: notifyRecovery, onChange: setNotifyRecovery },
+                                { label: 'SSL Expiration', checked: notifySSL, onChange: setNotifySSL },
+                                { label: 'Slow Response', checked: notifySlow, onChange: setNotifySlow },
+                            ].map((item) => (
+                                <label key={item.label} className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors border border-transparent hover:border-gray-100">
+                                    <input
+                                        type="checkbox"
+                                        checked={item.checked}
+                                        onChange={(e) => item.onChange(e.target.checked)}
+                                        className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:ring-offset-0"
+                                    />
+                                    <span className="text-sm text-gray-700 font-medium">{item.label}</span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end pt-2">
+                        <button
+                            onClick={onSave}
+                            disabled={isPending}
+                            className="px-6 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2 transition-all shadow-sm"
+                        >
+                            {isPending ? (
+                                <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>
+                            ) : (
+                                <><CheckCircle className="w-4 h-4" /> Save Changes</>
+                            )}
+                        </button>
+                    </div>
                 </div>
             )}
-
-            {isWhatsApp ? (
-                <div className="space-y-3 mb-4">
-                    <div>
-                        <label className="text-xs font-medium text-gray-600 uppercase tracking-wider">Your Phone Number (with country code)</label>
-                        <input
-                            type="tel"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            placeholder="+917976327138"
-                            className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-600 uppercase tracking-wider">CallMeBot API Key</label>
-                        <input
-                            type="text"
-                            value={apiKey}
-                            onChange={(e) => setApiKey(e.target.value)}
-                            placeholder="Your API key from CallMeBot"
-                            className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div className="pt-3 border-t border-gray-200">
-                        <label className="text-xs font-medium text-gray-600 uppercase tracking-wider">Test Number (optional)</label>
-                        <div className="mt-1 flex gap-2">
-                            <input
-                                type="tel"
-                                value={testNumber}
-                                onChange={(e) => setTestNumber(e.target.value)}
-                                placeholder="Leave empty to use your number"
-                                className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            />
-                            <button
-                                type="button"
-                                onClick={onTest}
-                                disabled={isTesting || !apiKey || (!phoneNumber && !testNumber)}
-                                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm font-medium"
-                            >
-                                {isTesting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                                Test
-                            </button>
-                        </div>
-                        <p className="mt-1 text-[10px] text-gray-400">Send a test message to verify your setup</p>
-                    </div>
-                </div>
-            ) : (
-                <div className="space-y-3 mb-4">
-                    <div>
-                        <label className="text-xs font-medium text-gray-600 uppercase tracking-wider">Webhook URL</label>
-                        <div className="mt-1 flex gap-2">
-                            <input
-                                type="url"
-                                value={webhookUrl}
-                                onChange={(e) => setWebhookUrl(e.target.value)}
-                                placeholder={type === 'SLACK' ? 'https://hooks.slack.com/services/...' : 'https://discord.com/api/webhooks/...'}
-                                className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            />
-                            <button
-                                type="button"
-                                onClick={onTest}
-                                disabled={isTesting || !webhookUrl}
-                                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm font-medium"
-                            >
-                                {isTesting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                                Test
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            <div className="border-t border-gray-100 pt-4 mb-4">
-                <p className="text-xs font-medium text-gray-600 uppercase tracking-wider mb-3">Notification Types</p>
-                <div className="grid grid-cols-2 gap-3">
-                    {[
-                        { label: 'Monitor Down', checked: notifyDown, onChange: setNotifyDown },
-                        { label: 'Monitor Recovery', checked: notifyRecovery, onChange: setNotifyRecovery },
-                        { label: 'SSL Expiring', checked: notifySSL, onChange: setNotifySSL },
-                        { label: 'Slow Response', checked: notifySlow, onChange: setNotifySlow },
-                    ].map((item) => (
-                        <label key={item.label} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={item.checked}
-                                onChange={(e) => item.onChange(e.target.checked)}
-                                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                            />
-                            {item.label}
-                        </label>
-                    ))}
-                </div>
-            </div>
-
-            <button
-                onClick={onSave}
-                disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
-            >
-                {isPending ? (
-                    <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>
-                ) : (
-                    <><CheckCircle className="w-4 h-4" /> Save Integration</>
-                )}
-            </button>
         </div>
     );
 }
@@ -311,7 +333,7 @@ const DiscordSetupInstructions = () => (
             <li>Right-click the channel → "Edit Channel"</li>
             <li>Go to "Integrations" → "Webhooks"</li>
             <li>Click "New Webhook"</li>
-            <li>Give it a name (e.g., "WebMoniter Alerts")</li>
+            <li>Give it a name (e.g., "WebsMoniter Alerts")</li>
             <li>Click "Copy Webhook URL"</li>
             <li>Paste the URL above</li>
         </ol>
@@ -369,12 +391,16 @@ export default function IntegrationsClient({
 
     return (
         <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-1 max-w-4xl mx-auto">
                 <IntegrationCard
                     type="SLACK"
                     title="Slack"
-                    description="Send alerts to Slack channels"
-                    icon={<Slack className="w-5 h-5 text-[#4A154B]" />}
+                    description="Real-time alerts to your Slack workspace"
+                    icon={
+                        <div className="w-12 h-12 flex items-center justify-center bg-[#4A154B]/10 rounded-xl shrink-0">
+                            <Slack className="w-6 h-6 text-[#4A154B]" />
+                        </div>
+                    }
                     isEnabled={permissions.includes('SLACK')}
                     userIntegration={slackIntegration as any}
                     isSuperAdmin={isSuperAdmin}
@@ -384,8 +410,12 @@ export default function IntegrationsClient({
                 <IntegrationCard
                     type="DISCORD"
                     title="Discord"
-                    description="Send alerts to Discord channels"
-                    icon={<MessageCircle className="w-5 h-5 text-[#5865F2]" />}
+                    description="Instant notifications to Discord channels"
+                    icon={
+                        <div className="w-12 h-12 flex items-center justify-center bg-[#5865F2]/10 rounded-xl shrink-0">
+                            <MessageCircle className="w-6 h-6 text-[#5865F2]" />
+                        </div>
+                    }
                     isEnabled={permissions.includes('DISCORD')}
                     userIntegration={discordIntegration as any}
                     isSuperAdmin={isSuperAdmin}
@@ -395,8 +425,12 @@ export default function IntegrationsClient({
                 <IntegrationCard
                     type="WHATSAPP"
                     title="WhatsApp"
-                    description="Receive alerts via WhatsApp"
-                    icon={<Phone className="w-5 h-5 text-[#25D366]" />}
+                    description="Direct alerts to your mobile via WhatsApp"
+                    icon={
+                        <div className="w-12 h-12 flex items-center justify-center bg-[#25D366]/10 rounded-xl shrink-0">
+                            <Phone className="w-6 h-6 text-[#25D366]" />
+                        </div>
+                    }
                     isEnabled={permissions.includes('WHATSAPP')}
                     userIntegration={whatsappIntegration as any}
                     isSuperAdmin={isSuperAdmin}

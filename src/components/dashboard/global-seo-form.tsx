@@ -10,9 +10,9 @@ import { GLOBAL_PRESET } from "@/lib/seo-presets";
 export default function GlobalSEOForm({ initialSettings }: { initialSettings: any }) {
     const [isPending, startTransition] = useTransition();
     const [formData, setFormData] = useState({
-        siteName: initialSettings?.siteName || "WebMoniter",
+        siteName: initialSettings?.siteName || "WebsMoniter",
         titleSeparator: initialSettings?.titleSeparator || "|",
-        titleSuffix: initialSettings?.titleSuffix || "WebMoniter",
+        titleSuffix: initialSettings?.titleSuffix || "WebsMoniter",
         defaultKeywords: initialSettings?.defaultKeywords || "",
         defaultDescription: initialSettings?.defaultDescription || "",
         defaultOgImage: initialSettings?.defaultOgImage || "",

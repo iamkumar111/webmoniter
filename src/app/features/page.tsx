@@ -6,8 +6,8 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata("features", {
-    title: "Features - WebMoniter",
-    description: "Explore the powerful features of WebMoniter: Uptime Monitoring, SSL Tracking, Real-time Alerts, and more.",
+    title: "Features - WebsMoniter",
+    description: "Explore the powerful features of WebsMoniter: Uptime Monitoring, SSL Tracking, Real-time Alerts, and more.",
     keywords: ["uptime monitoring features", "ssl monitoring", "website status checks", "server monitoring tools"],
   });
 }

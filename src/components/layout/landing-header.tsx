@@ -28,7 +28,7 @@ export default function LandingHeader() {
         <div className="container mx-auto flex items-center justify-between">
           <Link className="flex items-center gap-2 group" href="/">
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300 transform group-hover:scale-105">W</div>
-            <span className="font-bold text-2xl text-gray-900 tracking-tight group-hover:text-indigo-600 transition-colors">WebMoniter</span>
+            <span className="font-bold text-2xl text-gray-900 tracking-tight group-hover:text-indigo-600 transition-colors">WebsMoniter</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-    const baseUrl = process.env.NEXTAUTH_URL || 'https://webmoniter.io';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://websmoniter.online';
 
     // Fetch custom robots.txt content if exists
     const settings = await prisma.globalSEOSettings.findUnique({

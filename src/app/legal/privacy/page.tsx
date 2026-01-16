@@ -7,9 +7,9 @@ export default function PrivacyPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">1. Introduction</h2>
         <p className="text-gray-700 leading-relaxed">
-          Welcome to WebMoniter ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. 
+          Welcome to WebsMoniter ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. 
           If you have any questions or concerns about this privacy notice or our practices with regards to your personal information, 
-          please contact us at privacy@webmoniter.online.
+          please contact us at privacy@websmoniter.online.
         </p>
       </section>
 

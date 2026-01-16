@@ -41,7 +41,7 @@ export default function SmtpForm({ initialData }: SmtpFormProps) {
       user: "",
       pass: "",
       fromEmail: "",
-      fromName: "WebMoniter",
+      fromName: "WebsMoniter",
     },
   });
 
@@ -167,7 +167,7 @@ export default function SmtpForm({ initialData }: SmtpFormProps) {
           <input
             {...register("fromName")}
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            placeholder="WebMoniter"
+            placeholder="WebsMoniter"
           />
           {errors.fromName && (
             <p className="text-sm font-medium text-red-500">{errors.fromName.message}</p>

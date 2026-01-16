@@ -1,7 +1,7 @@
-// WebMoniter Service Worker for Push Notifications
+// WebsMoniter Service Worker for Push Notifications
 // This service worker enables notifications even when the tab is not focused
 
-const CACHE_NAME = 'webmoniter-v1';
+const CACHE_NAME = 'websmoniter-v1';
 
 // Install event
 self.addEventListener('install', (event) => {
@@ -28,7 +28,7 @@ self.addEventListener('message', (event) => {
         self.registration.showNotification(title, {
             body,
             icon: icon || '/favicon.svg',
-            tag: tag || 'webmoniter-alert',
+            tag: tag || 'websmoniter-alert',
             requireInteraction: requireInteraction || false,
             badge: '/favicon.svg',
             vibrate: [200, 100, 200],

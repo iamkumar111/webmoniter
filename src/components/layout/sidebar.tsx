@@ -75,7 +75,7 @@ export default function Sidebar({ user, isOpen, onClose }: SidebarProps) {
         <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
           <Link href="/dashboard" className="flex items-center gap-2" onClick={onClose}>
             <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center text-white font-bold">W</div>
-            <span className="text-xl font-bold text-gray-800 tracking-tight">WebMoniter</span>
+            <span className="text-xl font-bold text-gray-800 tracking-tight">WebsMoniter</span>
           </Link>
           <button className="lg:hidden p-2 text-gray-500" onClick={onClose}>
             <X className="w-5 h-5" />

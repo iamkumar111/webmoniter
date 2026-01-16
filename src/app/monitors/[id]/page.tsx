@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   if (!monitor) {
     return {
-      title: "Monitor Not Found - WebMoniter"
+      title: "Monitor Not Found - WebsMoniter"
     };
   }
 
   return {
-    title: `${monitor.name} - Monitor Status | WebMoniter`,
+    title: `${monitor.name} - Monitor Status | WebsMoniter`,
     description: `Real-time uptime status and performance metrics for ${monitor.name}.`,
   };
 }

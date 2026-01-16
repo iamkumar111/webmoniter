@@ -7,9 +7,9 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
     return generatePageMetadata("docs", {
-        title: "Documentation - WebMoniter",
-        description: "Learn how to set up site monitoring, SSL alerts, and status pages with WebMoniter documentation.",
-        keywords: ["webmoniter docs", "uptime robot api", "monitoring documentation", "setup guide"],
+        title: "Documentation - WebsMoniter",
+        description: "Learn how to set up site monitoring, SSL alerts, and status pages with WebsMoniter documentation.",
+        keywords: ["websmoniter docs", "uptime robot api", "monitoring documentation", "setup guide"],
     });
 }
 

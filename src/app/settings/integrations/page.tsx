@@ -49,22 +49,34 @@ export default async function IntegrationsPage() {
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
-            <div className="mb-8">
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
-                        <Puzzle className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex flex-col">
-                        <h1 className="text-2xl font-bold text-gray-900">Integrations</h1>
-                        <span className="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full w-fit mt-1">
-                            {permissions.groupName} Plan
-                        </span>
+            <div className="mb-10">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl shadow-lg shadow-indigo-100">
+                            <Puzzle className="w-8 h-8 text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Integrations</h1>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md border border-indigo-100">
+                                    {permissions.groupName} Plan
+                                </span>
+                                <span className="text-sm text-gray-500 font-medium">
+                                    Active Monitoring Alerts
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p className="text-gray-600">
-                    Connect your monitoring alerts to external services.
-                    <span className="ml-1 text-sm text-gray-500">(Your plan allows: {permissions.integrations.join(', ') || 'None'})</span>
-                </p>
+                <div className="p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                    <p className="text-gray-600 leading-relaxed">
+                        Connect your monitoring alerts to external services.
+                        Stay notified wherever you are with real-time updates through Slack, Discord, and WhatsApp.
+                        <span className="block mt-2 text-xs font-medium text-gray-400">
+                            Your plan currently supports: {permissions.integrations.join(', ') || 'None'}
+                        </span>
+                    </p>
+                </div>
             </div>
 
             {/* Super Admin: Global Access Control */}

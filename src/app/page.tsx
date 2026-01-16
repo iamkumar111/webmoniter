@@ -8,7 +8,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata("home", {
-    title: "WebMoniter - Free Uptime Monitoring & Status Pages",
+    title: "WebsMoniter - Free Uptime Monitoring & Status Pages",
     description: "The world's leading free uptime monitoring service. Monitor websites, SSL certificates, and APIs in real-time. Get instant alerts via Email, Slack, and SMS.",
     keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring"],
   });
@@ -190,7 +190,7 @@ export default async function LandingPage() {
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why WebMoniter?</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why WebsMoniter?</h2>
               <p className="mt-4 text-lg text-gray-600">We provide the most reliable monitoring service with a focus on simplicity and accuracy.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -228,7 +228,7 @@ export default async function LandingPage() {
                 <span className="text-sm font-semibold text-orange-700">Trusted by 5,000+ Developers</span>
               </div>
               <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6">What our users say</h2>
-              <p className="text-xl text-gray-600">Don't just take our word for it. Here's what teams like yours are saying about WebMoniter.</p>
+              <p className="text-xl text-gray-600">Don't just take our word for it. Here's what teams like yours are saying about WebsMoniter.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -239,7 +239,7 @@ export default async function LandingPage() {
                   {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
                 </div>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed relative z-10">
-                  "WebMoniter saved us during our Black Friday sale. The instant alerts let us fix a database issue before customers noticed. It's an absolute lifesaver."
+                  "WebsMoniter saved us during our Black Friday sale. The instant alerts let us fix a database issue before customers noticed. It's an absolute lifesaver."
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-600 text-lg">SJ</div>
@@ -275,7 +275,7 @@ export default async function LandingPage() {
                   {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
                 </div>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed relative z-10">
-                  "Simple, effective, and affordable. Most tools are bloated with features we don't need. WebMoniter focuses on what matters: keeping us online."
+                  "Simple, effective, and affordable. Most tools are bloated with features we don't need. WebsMoniter focuses on what matters: keeping us online."
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-lg">ER</div>
@@ -298,9 +298,9 @@ export default async function LandingPage() {
             {
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "WebMoniter",
-              "url": "https://webmoniter.io",
-              "logo": "https://webmoniter.io/logo.png",
+              "name": "WebsMoniter",
+              "url": "https://websmoniter.online",
+              "logo": "https://websmoniter.online/logo.png",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+1-555-0123-456",
@@ -310,7 +310,7 @@ export default async function LandingPage() {
             {
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
-              "name": "WebMoniter",
+              "name": "WebsMoniter",
               "applicationCategory": "DeveloperApplication",
               "operatingSystem": "Web",
               "offers": {

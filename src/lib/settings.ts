@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+import { unstable_cache } from "next/cache";
+
 export async function getSmtpConfig() {
   const session = await auth();
   if ((session?.user as any)?.role !== "SUPER_ADMIN") return null;
@@ -32,8 +34,12 @@ export async function getPublicSystemSettings() {
   });
 }
 
-export async function getPageContent(slug: string) {
-  return prisma.pageContent.findUnique({
-    where: { slug },
-  });
-}
+export const getPageContent = unstable_cache(
+  async (slug: string) => {
+    return prisma.pageContent.findUnique({
+      where: { slug },
+    });
+  },
+  ['page-content'],
+  { revalidate: 3600, tags: ['content'] }
+);

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: "WebsMoniter - Free Uptime Monitoring & Status Pages",
     template: "%s | WebsMoniter"
   },
-  description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
+  description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
   keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
   authors: [{ name: "WebsMoniter Team" }],
   creator: "WebsMoniter",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://websmoniter.online",
     title: "WebsMoniter - Free Uptime Monitoring",
-    description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
+    description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
     siteName: "WebsMoniter",
     images: [
       {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "WebsMoniter - Free Uptime Monitoring",
-    description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
+    description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
     images: ["/og-image.png"],
   },
   metadataBase: new URL('https://websmoniter.online'),

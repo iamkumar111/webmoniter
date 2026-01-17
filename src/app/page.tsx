@@ -40,10 +40,10 @@ export default async function LandingPage() {
                     <span className="text-sm font-semibold text-indigo-700">{data.badgeText || "New Generation Monitoring"}</span>
                   </div>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-[1.1]">
-                    {data.heroTitle || "Monitor Your Digital World"}
+                    {data.heroTitle || "5 Free Monitors Forever → Uptime, SSL, Cron, Keyword & API Checks in 30 Seconds!"}
                   </h1>
                   <p className="mx-auto lg:mx-0 max-w-[600px] text-gray-600 text-lg md:text-xl leading-relaxed font-medium">
-                    {data.heroSubtitle || "Ensure 99.99% uptime with our advanced monitoring solution. Real-time alerts, SSL tracking, and detailed analytics in one dashboard."}
+                    {data.heroSubtitle || "Get Instant Alerts on Email, SMS, Slack + 10 More. Keep Your Website Online 24/7 – Join 25,000+ Happy Users Now!"}
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">

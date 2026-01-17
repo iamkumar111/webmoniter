@@ -120,17 +120,17 @@ function IntegrationCard({
     // Show locked state if not enabled globally and user is not super admin
     if (!isEnabled && !isSuperAdmin) {
         return (
-            <div className="group relative bg-white rounded-xl border border-gray-200 p-6 overflow-hidden shadow-sm hover:shadow-md transition-all text-left">
+            <div className="group relative bg-white rounded-xl border border-gray-200 p-6 overflow-hidden shadow-sm hover:shadow-md transition-all text-left min-h-[260px]">
                 {/* Content (Dimmed) */}
-                <div className="flex items-center justify-between opacity-40 grayscale pointer-events-none select-none filter blur-[1px]">
-                    <div className="flex items-center gap-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 opacity-40 grayscale pointer-events-none select-none filter blur-[1px]">
+                    <div className="flex items-start sm:items-center gap-5">
                         {icon}
                         <div>
                             <h3 className="font-bold text-gray-900 text-lg tracking-tight">{title}</h3>
                             <p className="text-sm text-gray-500 font-medium">{description}</p>
                         </div>
                     </div>
-                    <div className="w-11 h-6 bg-gray-200 rounded-full"></div>
+                    <div className="w-11 h-6 bg-gray-200 rounded-full shrink-0"></div>
                 </div>
 
                 {/* Overlay Badge */}

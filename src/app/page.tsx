@@ -9,8 +9,8 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata("home", {
     title: "WebsMoniter - Free Uptime Monitoring & Status Pages",
-    description: "The world's leading free uptime monitoring service. Monitor websites, SSL certificates, and APIs in real-time. Get instant alerts via Email, Slack, and SMS.",
-    keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring"],
+    description: "Get 5 Professional Monitors FREE – No Credit Card Required! Advanced SSL, Cron, Keyword, Uptime & API Monitoring + Instant Alerts (Email, SMS, Slack & 10+ channels). Start in 30 Seconds and Never Lose Visitors to Downtime Again!",
+    keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
   });
 }
 
@@ -37,7 +37,7 @@ export default async function LandingPage() {
                 <div className="space-y-4">
                   <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-4 py-1.5 w-fit mx-auto lg:mx-0">
                     <span className="flex h-2 w-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                    <span className="text-sm font-semibold text-indigo-700">{data.badgeText || "New Generation Monitoring"}</span>
+                    <span className="text-sm font-semibold text-indigo-700">{data.badgeText || "WebsMoniter: Next-Gen Monitoring"}</span>
                   </div>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-[1.1]">
                     {data.heroTitle || "5 Free Monitors Forever → Uptime, SSL, Cron, Keyword & API Checks in 30 Seconds!"}
@@ -162,7 +162,7 @@ export default async function LandingPage() {
         <section className="py-16 md:py-24 bg-white border-b border-gray-100">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Reliability by the Numbers</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">WebsMoniter Service Reliability</h2>
               <p className="mt-4 text-lg text-gray-600">Our platform processes billions of requests to ensure your services stay online, everywhere, all the time.</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">

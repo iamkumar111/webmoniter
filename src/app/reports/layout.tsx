@@ -1,28 +1,21 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import Sidebar from "@/components/layout/sidebar";
-import Header from "@/components/layout/header";
+import { auth } from '@/auth';
+import AppShell from '@/components/layout/app-shell';
+import { redirect } from 'next/navigation';
 
-export default async function DashboardLayout({
+export default async function ReportsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const session = await auth();
 
-  if (!session) {
-    redirect("/login");
+  if (!session?.user) {
+    redirect('/login');
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar user={session.user} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header user={session.user} />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
-          {children}
-        </main>
-      </div>
-    </div>
+    <AppShell user={session.user} activePage="reports">
+      {children}
+    </AppShell>
   );
 }

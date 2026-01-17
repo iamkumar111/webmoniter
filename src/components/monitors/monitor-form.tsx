@@ -32,7 +32,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export default function MonitorForm({ monitor }: { monitor?: Monitor }) {
+export default function MonitorForm({ monitor, minInterval = 1 }: { monitor?: Monitor; minInterval?: number }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -155,7 +155,9 @@ export default function MonitorForm({ monitor }: { monitor?: Monitor }) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               {[1, 2, 5, 10, 15, 30, 60].map(m => (
-                <option key={m} value={m}>{m} minutes</option>
+                <option key={m} value={m} disabled={m < minInterval}>
+                  {m} minutes {m < minInterval ? '(Upgrade to unlock)' : ''}
+                </option>
               ))}
             </select>
           </div>

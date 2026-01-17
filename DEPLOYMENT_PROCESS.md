@@ -27,7 +27,7 @@ npx prisma db push
 npm run build
 
  4. Start everything with PM2
-pm2 start ecosystem.config.js
+                                    pm2 start ecosystem.config.js
 
 
  4. Useful PM2 Commands

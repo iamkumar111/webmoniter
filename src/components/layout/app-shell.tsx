@@ -8,9 +8,10 @@ import NotificationListener from "@/components/layout/notification-listener";
 interface AppShellProps {
     children: React.ReactNode;
     user: any;
+    activePage?: string;
 }
 
-export default function AppShell({ children, user }: AppShellProps) {
+export default function AppShell({ children, user, activePage }: AppShellProps) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (

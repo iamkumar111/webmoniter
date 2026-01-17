@@ -58,8 +58,7 @@ export default function LoginPage() {
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">W</div>
           <span className="font-bold text-3xl text-gray-900 tracking-tight">WebsMoniter</span>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Welcome back</h2>
-        <p className="mt-2 text-sm text-gray-600">Sign in to your account to continue</p>
+        <h2 className="text-2xl font-bold text-gray-900">Login</h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">

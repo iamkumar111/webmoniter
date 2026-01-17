@@ -155,8 +155,8 @@ function IntegrationCard({
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
             {/* Header / Toggle Section */}
-            <div className="p-6 flex items-center justify-between">
-                <div className="flex items-center gap-5">
+            <div className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-5">
                     {icon}
                     <div>
                         <h3 className="font-bold text-gray-900 text-lg tracking-tight">{title}</h3>

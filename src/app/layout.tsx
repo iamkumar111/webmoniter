@@ -14,16 +14,21 @@ export const metadata: Metadata = {
     default: "WebsMoniter - Free Uptime Monitoring & Status Pages",
     template: "%s | WebsMoniter"
   },
-  description: "The world's leading free uptime monitoring service. Monitor websites, SSL certificates, and APIs in real-time. Get instant alerts via Email, Slack, and SMS.",
+  description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
   keywords: ["uptime monitor", "free website monitoring", "status page", "ping monitor", "ssl monitoring", "WebsMoniter", "free moniter", "website down check", "server monitoring", "api monitoring"],
   authors: [{ name: "WebsMoniter Team" }],
   creator: "WebsMoniter",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://websmoniter.online",
     title: "WebsMoniter - Free Uptime Monitoring",
-    description: "Monitor your websites uptime and performance for free. Get instant alerts and detailed status pages.",
+    description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
     siteName: "WebsMoniter",
     images: [
       {
@@ -37,10 +42,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "WebsMoniter - Free Uptime Monitoring",
-    description: "Monitor your websites uptime and performance for free. Get instant alerts and detailed status pages.",
+    description: "Free Website Uptime Monitoring with SSL Expiry, Cron Job, Keyword & API Checks – 5 Monitors FREE Forever! Instant Downtime Alerts via Email, SMS, Slack, Telegram & More. Start Monitoring in Just 30 Seconds!",
     images: ["/og-image.png"],
   },
   metadataBase: new URL('https://websmoniter.online'),
+  other: {
+    "google-site-verification": "verification_token", // Placeholder
+  }
 };
 
 export default async function RootLayout({
@@ -59,6 +67,22 @@ export default async function RootLayout({
         </Providers>
         <CookieConsent />
         <Toaster position="top-right" richColors />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "WebsMoniter",
+              "url": "https://websmoniter.online",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://websmoniter.online/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            })
+          }}
+        />
       </body>
     </html>
   );

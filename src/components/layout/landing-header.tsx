@@ -62,7 +62,7 @@ export default function LandingHeader() {
             </Link>
             <Link
               className="text-sm font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-indigo-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-              href="/login"
+              href="/register"
             >
               Get Started
             </Link>
@@ -99,7 +99,7 @@ export default function LandingHeader() {
               <Link className="text-center w-full py-2.5 rounded-lg border border-gray-200 font-semibold text-gray-900 hover:bg-gray-50" href="/login" onClick={() => setIsMenuOpen(false)}>
                 Login
               </Link>
-              <Link className="text-center w-full py-2.5 rounded-lg bg-indigo-600 text-white font-bold hover:bg-indigo-700" href="/login" onClick={() => setIsMenuOpen(false)}>
+              <Link className="text-center w-full py-2.5 rounded-lg bg-indigo-600 text-white font-bold hover:bg-indigo-700" href="/register" onClick={() => setIsMenuOpen(false)}>
                 Get Started
               </Link>
             </div>

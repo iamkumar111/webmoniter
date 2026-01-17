@@ -1,8 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/layout/sidebar";
-import Header from "@/components/layout/header";
-import NotificationListener from "@/components/layout/notification-listener";
+import AppShell from "@/components/layout/app-shell";
 
 export default async function DashboardLayout({
   children,
@@ -16,16 +14,9 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <NotificationListener />
-      <Sidebar user={session.user} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header user={session.user} />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
-          {children}
-        </main>
-      </div>
-    </div>
+    <AppShell user={session.user}>
+      {children}
+    </AppShell>
   );
 }
 

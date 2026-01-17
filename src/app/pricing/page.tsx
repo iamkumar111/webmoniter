@@ -41,11 +41,11 @@ export default function PricingPage() {
                         <ul className="space-y-3">
                            <li className="flex items-start gap-3 text-sm text-gray-600">
                               <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                              <span>5 Website Monitors</span>
+                              <span>5 Website Monitors Max</span>
                            </li>
                            <li className="flex items-start gap-3 text-sm text-gray-600">
                               <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                              <span>15-minute uptime checks</span>
+                              <span>5-minute uptime checks</span>
                            </li>
                            <li className="flex items-start gap-3 text-sm text-gray-600">
                               <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
@@ -53,24 +53,18 @@ export default function PricingPage() {
                            </li>
                            <li className="flex items-start gap-3 text-sm text-gray-600">
                               <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                              <span>Basic uptime statistics</span>
+                              <span>Show Integration Tap but evetyhing is locked</span>
                            </li>
                         </ul>
                      </div>
 
                      <div className="mt-8 pt-6 border-t border-gray-100">
-                        <button
-                           disabled
-                           className="w-full py-2 px-4 bg-gray-100 text-gray-400 font-bold rounded-lg text-center cursor-not-allowed mb-3"
+                        <Link
+                           href="/register"
+                           className="w-full inline-flex h-11 items-center justify-center rounded-md bg-indigo-600 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-indigo-700 font-bold"
                         >
                            Get Started
-                        </button>
-                        <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-3">
-                           <p className="text-xs text-yellow-800 text-center font-medium">
-                              🚧 Due to extremely high traffic, new free sign-ups are temporarily disabled.
-                              We’re working on scaling our systems and securing funding to reopen access soon.
-                           </p>
-                        </div>
+                        </Link>
                      </div>
                   </div>
 

@@ -13,12 +13,104 @@ import { canAccessMonitor, canManageUser, canCreateUserRole } from "@/lib/auth-h
 
 // --- Monitor Actions ---
 
+// --- User Actions ---
+
+export async function registerUser(data: { name: string; email: string; password: string }) {
+  const { name, email, password } = data;
+
+  // Validate basic inputs
+  const RegisterSchema = z.object({
+    name: z.string().min(1),
+    email: z.string().email(),
+    password: z.string().min(8),
+  });
+
+  RegisterSchema.parse(data);
+
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) {
+    throw new Error("Email already registered");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Assign default "Free" group or create if it doesn't exist
+  let freeGroup = await prisma.userGroup.findFirst({
+    where: { isDefault: true }
+  });
+
+  if (!freeGroup) {
+    // Check if a group named "Free" exists but not marked default
+    freeGroup = await prisma.userGroup.findUnique({ where: { slug: 'free' } });
+
+    if (!freeGroup) {
+      // Create the Free group with the specified restrictions
+      // 5 Monitors Max, 5-minute interval min, No integrations
+      freeGroup = await prisma.userGroup.create({
+        data: {
+          name: "Free",
+          slug: "free",
+          features: {
+            maxMonitors: 5,
+            minInterval: 5,
+            integrations: []
+          },
+          isDefault: true
+        }
+      });
+    }
+  }
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role: 'USER', // Standard user
+      status: 'ACTIVE',
+      organizationId: null, // No organization initially
+      userGroupId: freeGroup.id,
+    }
+  });
+
+  // Direct them to login (or in a real app, sign them in via next-auth signIn helper)
+  // Since this is a server action, we can't easily sign them in on the client side without returning a success state to the client
+  // and having the client validation. For now, redirect to login.
+  redirect("/login?registered=true");
+}
+
+// --- Monitor Actions ---
+
 export async function createMonitor(data: z.infer<typeof MonitorSchema>) {
   const session = await auth();
   if (!session?.user) throw new Error("Unauthorized");
 
   const validated = MonitorSchema.parse(data);
-  const user = await prisma.user.findUnique({ where: { id: session.user.id! } });
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id! },
+    include: { userGroup: true }
+  });
+
+  // Enforce Plan Limits
+  if (user?.userGroup?.features) {
+    const features = user.userGroup.features as any;
+
+    // 1. Max Monitors Limit
+    if (features.maxMonitors) {
+      const monitorCount = await prisma.monitor.count({
+        where: { userId: user.id }
+      });
+
+      if (monitorCount >= features.maxMonitors) {
+        throw new Error(`Your plan is limited to ${features.maxMonitors} monitors. Please upgrade to add more.`);
+      }
+    }
+
+    // 2. Minimum Interval Limit
+    if (features.minInterval && validated.interval < features.minInterval) {
+      throw new Error(`Your plan requires a minimum check interval of ${features.minInterval} minutes.`);
+    }
+  }
 
   const monitor = await prisma.monitor.create({
     data: {
@@ -35,7 +127,7 @@ export async function createMonitor(data: z.infer<typeof MonitorSchema>) {
     },
   });
 
-  // Trigger immediate check in background (don't block redirect for too long)
+  // Trigger immediate check in background
   try {
     const { runMonitorCheck } = await import("@/lib/monitoring-engine");
     await runMonitorCheck(monitor.id);
@@ -58,12 +150,26 @@ export async function updateMonitor(id: string, data: z.infer<typeof MonitorSche
 
   if (!monitor) throw new Error("Monitor not found");
 
-  const user = await prisma.user.findUnique({ where: { email: session.user.email! } });
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email! },
+    include: { userGroup: true }
+  });
+
   if (!canAccessMonitor(user!, monitor)) {
     throw new Error("Unauthorized");
   }
 
   const validated = MonitorSchema.parse(data);
+
+  // Enforce Plan Limits on Update
+  if (user?.userGroup?.features) {
+    const features = user.userGroup.features as any;
+
+    // Minimum Interval Limit
+    if (features.minInterval && validated.interval < features.minInterval) {
+      throw new Error(`Your plan requires a minimum check interval of ${features.minInterval} minutes.`);
+    }
+  }
 
   await prisma.monitor.update({
     where: { id },
@@ -206,8 +312,6 @@ export async function unassignMonitor(monitorId: string, userId: string) {
   revalidatePath("/monitors");
   revalidatePath("/users");
 }
-
-// --- User Actions ---
 
 export async function createUser(data: z.infer<typeof UserSchema> & { password?: string; organizationId?: string; userGroupId?: string }) {
   const session = await auth();
